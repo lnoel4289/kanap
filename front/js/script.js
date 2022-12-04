@@ -1,11 +1,3 @@
-/** Copier le noeud 'section.items a'
-*/
-// let container = document.getDocumentById('items')
-// let item = document.querySelector('section.items > a');
-// let nextItem = item.cloneNode();
-// container.append(nextItem);
-
-
 /** Requéter l'API
 */
 fetch('http://localhost:3000/api/products') // requête GET HTTP
@@ -21,18 +13,28 @@ fetch('http://localhost:3000/api/products') // requête GET HTTP
         console.log('error'); // monitoring en cas d'erreur (requête échouée)
     });
 
+
+
+/** Copier le noeud 'section.items a'
+*/
+let item01 = document.querySelector('section.items > a')
+let item02 = item01.cloneNode(true);
+document.getElementById('items').appendChild(item02);
+
+
+
+
 /**
  * Affichage produits
  */
-let items = document.getElementsByClassName('items');
+let item = document.querySelector('section.items > a');
 
-items[0].querySelector("img").src = "http://localhost:3000/kanap01.jpeg";
-items[0].querySelector("img").alt = "bonjour";
-items[0].querySelector('a > article > h3')
+item.querySelector("img").src = "http://localhost:3000/kanap01.jpeg";
+item.querySelector("img").alt = "bonjour";
+item.querySelector('a > article > h3')
     .textContent = 'bonjour';
-items[0].querySelector('a > article > p')
+item.querySelector('a > article > p')
     .textContent = 'bonjour';
 
-let item = items[0].cloneNode;
-item.append;
+
 
