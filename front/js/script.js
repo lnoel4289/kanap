@@ -30,3 +30,29 @@ fetch('http://localhost:3000/api/products/') // requête GET HTTP
     document.getElementById('items').appendChild(item02);
 
 // }
+
+// chris
+// fetch('http://localhost:3000/api/products/')
+//     .then((res) => res.json())
+//     .then((myProducts) => {
+//     myKanaps(myProducts);
+//     })
+//     .catch((error) => {
+//         document.querySelector('.titles').innerHTML = '<h1>Server indisponible</h1>'
+//     });
+
+//     function myKanaps(index) {
+//         let articlesZone = document.querySelector('#items');
+
+//         for (let article of index) {
+
+//             articlesZone.innerHTML += `
+//             <a href="./product.html?id=42">
+//             <article>
+//               <img src=".../product01.jpg" alt="Lorem ipsum dolor sit amet, Kanap name1">
+//               <h3 class="productName">Kanap name1</h3>
+//               <p class="productDescription">Dis enim malesuada risus sapien gravida nulla nisl arcu. Dis enim malesuada risus sapien gravida nulla nisl arcu.</p>
+//             </article>
+//           </a>`
+//         }
+//     }
