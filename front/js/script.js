@@ -19,18 +19,36 @@ function displayProducts(products) {
         item.querySelector('img').alt = product.altTxt;
         item.querySelector('.productName').textContent = product.name;
         item.querySelector('.productDescription').textContent = product.description;
-        item.href = './product.html?id=' + product._id;
+        item.href = './product.html?id=' + product._id; console.log('a');
 
         // Boucle interrompue si le nombre d'enfants de 'items' est égal au nombre de 'product' du tableau 'products'
-        if (items.getElementsByTagName('a') < products.length) {
+        if (items.childElementCount == products.length) {
         break;
     }
-        // Suite de la boucle si celle-ci n'a pas été interrompue - Copie du noeud 'item'
+    //     // Suite de la boucle si celle-ci n'a pas été interrompue - Copie du noeud 'item'
         items.appendChild(item.cloneNode(true));
     }
 }
 
 // Je ne comprends pourquoi le dernier canapé de 'products' apparaît en premier
-function cloneItem() {
-    items.appendChild(item.cloneNode(true));
-}
+
+
+// function fillItems(products) {
+//     for (product of products) {
+//         // Remplir chaque item avec les propriétés de chaque propriété de l'array products
+//         item.querySelector('img').src = product.imageUrl;
+//         item.querySelector('img').alt = product.altTxt;
+//         item.querySelector('.productName').textContent = product.name;
+//         item.querySelector('.productDescription').textContent = product.description;
+//         item.href = './product.html?id=' + product._id;
+//     }
+// }
+
+// function addItem(products) {
+//     for (product of products) {
+//         items.appendChild(item.cloneNode(true));
+//         if (items.childElementCount == products.length) {
+//             break;
+//         }
+//     }
+// }
