@@ -13,10 +13,11 @@ fetch('http://localhost:3000/api/products/')
     });
 
 
-//  On définit la fonction a exécuter qui comprendre les autres fonctions
+//  On définit la fonction a exécuter qui comprend les autres fonctions-étapes
 function displayProduct(products) {
-    let product = fetchProduct(products);
+    let product = fetchProduct(products); //NFE?
     displaySpecs(product);
+    displayColors(product);
 };
 
 // Comparer l'id récupérée dans l'Url avec l'id présente dans les propriétés de 'products' de l'API et retourner la valeur
@@ -28,11 +29,40 @@ function fetchProduct(products){
     };
 };
 
-// Afficher les propriétés nécessaires du 'product' sur la page product.html
+// Afficher les informations du 'product' sur la page product.html
 function displaySpecs(product) {
-    console.log(product); // monitor
-    
+    document.querySelector('head > title').textContent = product.name;
+
+    const item = document.querySelector('.item');
+    item.querySelector('img').src = product.imageUrl;
+    item.querySelector('img').alt = product.altTxt;
+    document.getElementById('title').textContent = product.name;
+    document.getElementById('price').textContent = product.price;
+    document.getElementById('description').textContent = product.description;
+
+    // fonction permettant de remplir le sélecteur de couleurs en fonction du nbre de couleurs
 };
+
+// Remove default colors
+let options = document.getElementById('colors').children;
+options[1].remove();
+options[1].remove();
+
+// Insert options which number is product.colors.length
+function displayColors(product) {
+    let colors = product.colors;
+    for (color of colors) {
+        document.getElementById('colors').appendChild(options[0].cloneNode(true));
+    }
+};
+
+// Fonction permettant de remplir les options correctement
+function fillColorSelectorOptions(options) {
+    for (option of options ) {
+        option.querySelector
+    }
+}
+
 
 // Ecouter les changements sur nombre et couleur (le choix de couleur nécessitera une boucle ?for of? car le nombre de couleurs disponibles dépend de l'objet)
 
@@ -41,3 +71,4 @@ function displaySpecs(product) {
 //  Transmettre les données du local storage à la page panier (?)
 
 // END
+
