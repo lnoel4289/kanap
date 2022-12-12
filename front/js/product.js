@@ -41,10 +41,10 @@ function displaySpecs(product) {
     document.getElementById('description').textContent = product.description
 }
 
-// Remove default colors
-let options = document.getElementById('colors').children;
-options[1].remove()
-options[1].remove()
+// // Remove default colors
+// let options = document.getElementById('colors').children;
+// options[1].remove()
+// options[1].remove()
 
 // Insert options which number is product.colors.length
 function displayColors(product) {

@@ -13,7 +13,8 @@ fetch('http://localhost:3000/api/products/')
 
 // Fonction/boucle remplissant le noeud 'item' puis le clonant
 function displayProducts(products) {
-    for (product of products) {
+    // querySelector
+    for (let product of products) {
         // Remplir chaque item avec les propriétés de chaque propriété de l'array products
         item.querySelector('img').src = product.imageUrl;
         item.querySelector('img').alt = product.altTxt;
