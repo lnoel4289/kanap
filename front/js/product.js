@@ -49,10 +49,15 @@ function displayColors(product) {
     }
 }
 
+// Déclarer une variable en relation avec ce que la page produit affiche (id du produit, couleur et nombre)
 
-// Ecouter les changements sur nombre et couleur (le choix de couleur nécessitera une boucle ?for of? car le nombre de couleurs disponibles dépend de l'objet)
+// Ecouter les changements sur la page (couleur, nombre) et modifier la variable à chaque fois
 
-// Définir un local storage ? Y envoyer le nombre et la couleur choisis
+// Ecouter submit
+
+// Définir un local storage ? Y envoyer le nombre et la couleur choisis. Le nombre est égal au nombre de fois ou un produit strictement similaire existe (couleur incluse)
+// Une couelur différente indique que le produit est un autre produit même si l'id est le même.
+// On peut ausssi envisager une autre méthode et afficher d'abord le produit puis le nombre en fonction du coloris (à voir en foction de l'exercice)
 
 //  Transmettre les données du local storage à la page panier (?)
 
