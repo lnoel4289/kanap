@@ -49,6 +49,7 @@ function displayColors(product) {
     }
 }
 
+
 // Ecouter les changements sur nombre et couleur (le choix de couleur nécessitera une boucle ?for of? car le nombre de couleurs disponibles dépend de l'objet)
 
 // Définir un local storage ? Y envoyer le nombre et la couleur choisis
