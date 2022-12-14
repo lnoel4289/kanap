@@ -9,7 +9,7 @@ fetch('http://localhost:3000/api/products/')
     .then((res) => res.json())
     .then((products) => displayProduct(products))
     .catch((error) => {
-        document.getElementsByTagName('h1').textContent = error
+        document.getElementsByTagName('h1').innerText = error
     })
 
 

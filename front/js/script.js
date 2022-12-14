@@ -19,3 +19,5 @@ function displayProducts(products) {
         </article>`
     }
 }
+
+// Note:Pas super en terme de performances à l'affichage
