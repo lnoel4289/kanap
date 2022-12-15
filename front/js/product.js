@@ -1,26 +1,16 @@
 // Récupérer l'id du produit dans l'url
-let idNumber = new URL(document.location.href).searchParams.get('id')
+let productId = new URL(document.location.href).searchParams.get('id')
 
-// Récupérer le tableau 'products' avec l'API Fetch
-fetch('http://localhost:3000/api/products/')
+// Requête produit
+fetch(`http://localhost:3000/api/products/${productId}`)
     .then((res) => res.json())
-    .then((products) => displayProduct(products))
+    .then((product) => displayProduct(product))
     .catch((error) => {
-        document.getElementsByTagName('h1').innerText = error
+        document.getElementById('title').textContent = 'Impossible d\'afficher le produit demandé'
     })
 
-// Comparer l'id récupérée dans l'Url avec l'id présente dans les propriétés de 'products' de l'API et retourner la valeur
-function getProduct(products) {
-    for (let product of products) {
-        if (product._id == idNumber) {
-            return product
-        }
-    }
-}
-
-//  On définit la fonction a exécuter qui comprend les autres fonctions-étapes
-function displayProduct(products) {
-    let product = getProduct(products)
+//  On définit la fonction a exécuter comprenant les autres fonctions-étapes
+function displayProduct(product) {
     displayPageTitle(product)
     displaySpecs(product)
     displayColors(product)
@@ -41,13 +31,16 @@ function displaySpecs(product) {
     document.getElementById('description').textContent = product.description
 }
 
-// Add colors options in color selector
+// Add colors <options> in color selector
 function displayColors(product) {
     let colors = product.colors
     for (let color of colors) {
         document.getElementById('colors').innerHTML += `<option value="${color}">${color}</option>`
     }
 }
+
+
+// Partie 2: Vers le panier
 
 // Déclarer une variable en relation avec ce que la page produit affiche (id du produit, couleur et nombre)
 
@@ -56,8 +49,8 @@ function displayColors(product) {
 // Ecouter submit
 
 // Définir un local storage ? Y envoyer le nombre et la couleur choisis. Le nombre est égal au nombre de fois ou un produit strictement similaire existe (couleur incluse)
-// Une couelur différente indique que le produit est un autre produit même si l'id est le même.
-// On peut ausssi envisager une autre méthode et afficher d'abord le produit puis le nombre en fonction du coloris (à voir en foction de l'exercice)
+// Une couleur différente indique que le produit est un autre produit même si l'id est le même.
+// On peut aussi envisager une autre méthode et afficher d'abord le produit puis le nombre en fonction du coloris (à voir en fonction de l'exercice)
 
 //  Transmettre les données du local storage à la page panier (?)
 
