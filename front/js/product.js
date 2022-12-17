@@ -43,8 +43,25 @@ function displayColors(product) {
 
 
 // ::::::::::::::::::::::::::::::
-// :: Partie 2: Vers le panier :: #joyeuxnoel
+// :: Partie 2: Vers le panier ::  #joyeuxnoel
 // ::::::::::::::::::::::::::::::
+
+document.querySelector('#itemQuantity').addEventListener('input', (e) => {return e.target.value})
+
+document.querySelector('#itemQuantity').addEventListener('input', function(e) {
+    console.log (e.target.value)
+    return e.target.value
+    }
+)
+
+// document.querySelector('#colors').addEventListener('input', () => console.log (event.target.value))
+
+let currentProduct = {
+    id : productId,
+    // color : ,
+    number : document.querySelector('#itemQuantity').innerText
+}
+console.log (currentProduct)
 
 // Créer un array panier
 let cart = []
@@ -59,6 +76,8 @@ function addToCart(currentProduct) {
 
 // Exécuter fonction si click button
 document.getElementById('addToCart').addEventListener('click', addToCart(currentProduct))
+
+
 
 // Il faut récupérer les infos actuellement affichées et les transmettre à la variable produit avant de push le produit dans le tableau
 
