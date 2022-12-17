@@ -1,22 +1,24 @@
+// Partie 1: Remplir la page produit en fonction de l'id du produit visité
+
 // Récupérer l'id du produit dans l'url
 let productId = new URL(document.location.href).searchParams.get('id')
 
-// Requête produit
+// Requête (GET) product via l'id
 fetch(`http://localhost:3000/api/products/${productId}`)
     .then((res) => res.json())
-    .then((product) => displayProduct(product))
+    .then((product) => fillProductPage(product))
     .catch((error) => {
         document.getElementById('title').textContent = 'Impossible d\'afficher le produit demandé'
     })
 
-//  On définit la fonction a exécuter comprenant les autres fonctions-étapes
-function displayProduct(product) {
+//  Fonction remplir la page
+function fillProductPage(product) {
     displayPageTitle(product)
     displaySpecs(product)
     displayColors(product)
 }
 
-//  Display page title (product name)
+//  Display page title
 function displayPageTitle(product) {
     document.querySelector('head > title').textContent = product.name
 }
@@ -39,18 +41,33 @@ function displayColors(product) {
     }
 }
 
-
 // Partie 2: Vers le panier
 
-// Déclarer une variable en relation avec ce que la page produit affiche (id du produit, couleur et nombre)
+// Créer un array 'cart'
+// cart est un array comprenant 0 ou plusieurs objets (produits)
+let cart = []
+cart.push('f') // test
+console.table(cart) // monitor
+console.log(JSON.stringify(cart)) // monitor
 
-// Ecouter les changements sur la page (couleur, nombre) et modifier la variable à chaque fois
 
-// Ecouter submit
+// Ecouter button
+document.getElementById('addToCart').addEventListener('click', addToCart)
+// Si le nombre de produit est zéro ou si la couleur n'est pas définie, message d'erreur
+// button push produit dans cart
+// cart.html affichera cart
+// Mettre à jour le cart sans avoir besoin de rafraichir la page (POO?)
 
-// Définir un local storage ? Y envoyer le nombre et la couleur choisis. Le nombre est égal au nombre de fois ou un produit strictement similaire existe (couleur incluse)
+// Ajouter le produit en cours au panier
+function addToCart(leProduit) {
+    // les conditions
+    cart.push(leProduit)
+}
+
+
+
+// Envoyer le JSON dans le local storage
 // Une couleur différente indique que le produit est un autre produit même si l'id est le même.
-// On peut aussi envisager une autre méthode et afficher d'abord le produit puis le nombre en fonction du coloris (à voir en fonction de l'exercice)
 
 //  Transmettre les données du local storage à la page panier (?)
 
