@@ -4,11 +4,11 @@
 let productId = new URL(document.location.href).searchParams.get('id')
 
 // Requête (GET) product via l'id
-fetch(`http://localhost:3000/api/products/${productId}`)
+let product = fetch(`http://localhost:3000/api/products/${productId}`)
     .then((res) => res.json())
     .then((product) => fillProductPage(product))
     .catch((error) => {
-        document.getElementById('title').textContent = 'Impossible d\'afficher le produit demandé'
+        document.getElementById('title').textContent = 'Impossible d\'afficher le produit'
     })
 
 //  Fonction remplir la page
@@ -41,35 +41,34 @@ function displayColors(product) {
     }
 }
 
-// Partie 2: Vers le panier
 
-// Créer un array 'cart'
-// cart est un array comprenant 0 ou plusieurs objets (produits)
+// ::::::::::::::::::::::::::::::
+// :: Partie 2: Vers le panier :: #joyeuxnoel
+// ::::::::::::::::::::::::::::::
+
+// Créer un array panier
 let cart = []
-cart.push('f') // test
+cart.push('f', 'd') // test
 console.table(cart) // monitor
-console.log(JSON.stringify(cart)) // monitor
+console.log(JSON.stringify(cart[1])) // monitor
 
-
-// Ecouter button
-document.getElementById('addToCart').addEventListener('click', addToCart)
-// Si le nombre de produit est zéro ou si la couleur n'est pas définie, message d'erreur
-// button push produit dans cart
-// cart.html affichera cart
-// Mettre à jour le cart sans avoir besoin de rafraichir la page (POO?)
-
-// Ajouter le produit en cours au panier
-function addToCart(leProduit) {
-    // les conditions
-    cart.push(leProduit)
+// Fonction ajouter le produit en cours au panier
+function addToCart(currentProduct) {
+    cart.push(currentProduct)
 }
 
+// Exécuter fonction si click button
+document.getElementById('addToCart').addEventListener('click', addToCart(currentProduct))
+
+// Il faut récupérer les infos actuellement affichées et les transmettre à la variable produit avant de push le produit dans le tableau
+
+// Lorsqu’on ajoute un produit au panier, si celui-ci n'était pas déjà présent dans le panier, on ajoute un nouvel élément dans l’array
+
+// Lorsqu’on ajoute un produit au panier, si celui-ci était déjà présent dans le panier (même id + même couleur), on incrémente simplement la quantité du produit correspondant dans l’array
+
+// Si le nombre de produit ajouté est zéro ou si la couleur n'est pas définie, messages d'erreurs
 
 
 // Envoyer le JSON dans le local storage
-// Une couleur différente indique que le produit est un autre produit même si l'id est le même.
-
-//  Transmettre les données du local storage à la page panier (?)
 
 // END
-
