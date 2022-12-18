@@ -71,45 +71,32 @@ function changeColor() {
 // Modifier l'array 'currentProduct' lorsqu'un évênement se produit
 colorSelector.addEventListener('input', function(e) {
     currentProduct[1] = e.target.value
-    console.table(currentProduct) // monitor
-    })
+})
 
-quantitySelector.addEventListener('input', function(e) {
-    currentProduct[2] = e.target.value
-    console.table(currentProduct) // monitor
-    })
+quantitySelector.addEventListener('change', e => currentProduct[2] = e.target.value)
 
-// Ajouter l'array 'currentProduct' à l'array 'cart' quand on clic sur le bouton
-addToCartButton.addEventListener('click', addToCart(currentProduct))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Si on clique sur le bouton, on essaie d'ajouter 'currentProduct' au 'cart'
+addToCartButton.addEventListener('click', function() {
+    if (currentProduct[1] != undefined && currentProduct[1] != '' && currentProduct[2] > 0) {
+        addCurrentProduct(cart)
+    } else {
+        alert('Vous devez choisir une couleur et une quantité !')
+    }
+})
+// Il faut parcourir le 'cart' pour vérifier si un produit identique y est déjà (id et couleur identiques)
+function addCurrentProduct(cart) {
+    for (let product of cart) {
+        if (product[0] == currentProduct[0] && product[1] == currentProduct[1]) {
+            product[2] += currentProduct[2]
+        } 
+        addToCart(currentProduct)
+        console.table(cart)
+    }
+}
 // Fonction ajouter le produit en cours au panier
 function addToCart(currentProduct) {
     cart.push(currentProduct)
 }
-
-
-
-// Il faut récupérer les infos actuellement affichées et les transmettre à la variable produit avant de push le produit dans le tableau
-
-// Lorsqu’on ajoute un produit au panier, si celui-ci n'était pas déjà présent dans le panier, on ajoute un nouvel élément dans l’array
-
-// Lorsqu’on ajoute un produit au panier, si celui-ci était déjà présent dans le panier (même id + même couleur), on incrémente simplement la quantité du produit correspondant dans l’array
-
-// Si le nombre de produit ajouté est zéro ou si la couleur n'est pas définie, messages d'erreurs
-
 
 // Envoyer le JSON dans le local storage
 
