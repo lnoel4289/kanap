@@ -1,10 +1,10 @@
 // Partie 1: Remplir la page produit en fonction de l'id du produit visité
 
 // Récupérer l'id du produit dans l'url
-let productId = new URL(document.location.href).searchParams.get('id')
+const productId = new URL(document.location.href).searchParams.get('id')
 
 // Requête (GET) product via l'id
-let product = fetch(`http://localhost:3000/api/products/${productId}`)
+const product = fetch(`http://localhost:3000/api/products/${productId}`)
     .then((res) => res.json())
     .then((product) => fillProductPage(product))
     .catch((error) => {
@@ -14,8 +14,8 @@ let product = fetch(`http://localhost:3000/api/products/${productId}`)
 //  Fonction remplir la page
 function fillProductPage(product) {
     displayPageTitle(product)
-    displaySpecs(product)
-    displayColors(product)
+    displayProductSpecs(product)
+    displayColorOptions(product)
 }
 
 //  Display page title
@@ -24,7 +24,7 @@ function displayPageTitle(product) {
 }
 
 // Afficher les informations du 'product' sur la page product.html
-function displaySpecs(product) {
+function displayProductSpecs(product) {
     const item = document.querySelector('.item')
     item.querySelector('img').src = product.imageUrl
     item.querySelector('img').alt = product.altTxt
@@ -34,48 +34,71 @@ function displaySpecs(product) {
 }
 
 // Add colors <options> in color selector
-function displayColors(product) {
+function displayColorOptions(product) {
     let colors = product.colors
     for (let color of colors) {
         document.getElementById('colors').innerHTML += `<option value="${color}">${color}</option>`
     }
 }
 
-
 // ::::::::::::::::::::::::::::::
-// :: Partie 2: Vers le panier ::  #joyeuxnoel
+// :: Partie 2: Vers le panier ::
 // ::::::::::::::::::::::::::::::
-
-document.querySelector('#itemQuantity').addEventListener('input', (e) => {return e.target.value})
-
-document.querySelector('#itemQuantity').addEventListener('input', function(e) {
-    console.log (e.target.value)
-    return e.target.value
-    }
-)
-
-// document.querySelector('#colors').addEventListener('input', () => console.log (event.target.value))
-
-let currentProduct = {
-    id : productId,
-    // color : ,
-    number : document.querySelector('#itemQuantity').innerText
-}
-console.log (currentProduct)
 
 // Créer un array panier
 let cart = []
-cart.push('f', 'd') // test
 console.table(cart) // monitor
-console.log(JSON.stringify(cart[1])) // monitor
+
+// Définir les noeuds à surveiller
+let colorSelector = document.getElementById('colors')
+let quantitySelector = document.getElementById('itemQuantity')
+let addToCartButton = document.getElementById('addToCart')
+
+// Définir les membres du tableau currentProduct
+let productQuantity = quantitySelector.value
+let productColor = colorSelector.value
+
+// Définir currentProduct à ajouter au tableau panier
+let currentProduct = [productId, productColor, productQuantity]
+console.table (currentProduct) // monitor
+
+// Fonctions modifiant l'array 'currentProduct'
+function changeColor() {
+    currentProduct[1] = productColor
+    console.table(currentProduct) // monitor
+}
+
+// Modifier l'array 'currentProduct' lorsqu'un évênement se produit
+colorSelector.addEventListener('input', function(e) {
+    currentProduct[1] = e.target.value
+    console.table(currentProduct) // monitor
+    })
+
+quantitySelector.addEventListener('input', function(e) {
+    currentProduct[2] = e.target.value
+    console.table(currentProduct) // monitor
+    })
+
+// Ajouter l'array 'currentProduct' à l'array 'cart' quand on clic sur le bouton
+addToCartButton.addEventListener('click', addToCart(currentProduct))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Fonction ajouter le produit en cours au panier
 function addToCart(currentProduct) {
     cart.push(currentProduct)
 }
-
-// Exécuter fonction si click button
-document.getElementById('addToCart').addEventListener('click', addToCart(currentProduct))
 
 
 
