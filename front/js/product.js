@@ -72,47 +72,65 @@ function changeColor() {
 colorSelector.addEventListener('input', function(e) {
     currentProduct[1] = e.target.value
 })
-
 quantitySelector.addEventListener('change', e => currentProduct[2] = e.target.value)
 
-// Si on clique sur le bouton, on essaie d'ajouter 'currentProduct' au 'cart' à revoir
+// Si on clique sur le bouton, on essaie d'ajouter 'currentProduct' au 'cart' en gérant les exceptions
 addToCartButton.addEventListener('click', () => {
-    if (currentProduct[1] != undefined && currentProduct[1] != '' && currentProduct[2] > 0) {
-        addToCart(cart)
+    if(currentProduct[1] == '') {
+        alert('Veuillez choisir choisir une couleur')
+    } else if(currentProduct[2] < 1) {
+        alert('Veuillez indiquer le nombre d\'articles souhaités')
+    } else if(currentProduct[2] > 100) {
+        alert('Vous ne pouvez pas dépasser un total de 100 articles !')
     } else {
-        alert('Vous devez choisir une couleur')
-        console.log('click') // monitor
+        // problème ci-dessous
+        if() {
+        product[2] += currentProduct[2]
+        alert('La quantité a bien été modifiée !')
+        console.table(cart) // monitor
+        // problème ci-dessus
+        } else {
+        cart.push(currentProduct)
+        alert('Article(s) correctement ajouté(s) !')
+        console.table(cart) // monitor
+        }
     }
 })
 
-
-
-// Il faut parcourir le 'cart' pour vérifier si un produit identique y est déjà (id et couleur identiques)
-function addToCart(cart) {
+// Trouver le même prod
+function checkSameProduct(cart) {
     for (let product of cart) {
         if (product[0] == currentProduct[0] && product[1] == currentProduct[1]) {
-            increaseProductQuantity(product, currentProduct)
+            product[2] += currentProduct[2]
         }
-        pushToCart(currentProduct)
-    
-        console.table(cart) // monitor
     }
 }
 
-// Fonction trouver
-function searchSameProduct() {
-    let sameProduct = cart.find((element) => element[0,1] == currentProduct[0,1])
-}
+// Fonction vérifier si le mm produit existe dans le cart
+
+// Il faut parcourir le 'cart' pour vérifier si un produit identique y est déjà (id et couleur identiques)
+// function addToCart(cart) {
+//     for (let product of cart) {
+//         if (product[0] == currentProduct[0] && product[1] == currentProduct[1]) {
+//             increaseProductQuantity(product, currentProduct)
+//         }
+//         pushToCart(currentProduct)
+    
+//         console.table(cart) // monitor
+//     }
+// }
+
+
 
 // Fonction incrémenter le produit existant
-function increaseProductQuantity(product, currentProduct) {
-    product[2] += currentProduct[2]
-}
+// function increaseProductQuantity(product) {
+//     product[2] += currentProduct[2]
+// }
 
-// Fonction ajouter le produit en cours au panier
-function pushToCart(currentProduct) {
-    cart.push(currentProduct)
-}
+// // Fonction ajouter le produit en cours au panier
+// function addNewProduct() {
+//     cart.push(currentProduct)
+// }
 
 // Envoyer le JSON dans le local storage
 
