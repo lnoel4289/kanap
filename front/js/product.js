@@ -78,23 +78,36 @@ quantitySelector.addEventListener('change', e => currentProduct[2] = e.target.va
 // Si on clique sur le bouton, on essaie d'ajouter 'currentProduct' au 'cart'
 addToCartButton.addEventListener('click', function() {
     if (currentProduct[1] != undefined && currentProduct[1] != '' && currentProduct[2] > 0) {
-        addCurrentProduct(cart)
+        addToCart(cart)
     } else {
         alert('Vous devez choisir une couleur et une quantité !')
+        console.table(cart) // monitor
     }
 })
 // Il faut parcourir le 'cart' pour vérifier si un produit identique y est déjà (id et couleur identiques)
-function addCurrentProduct(cart) {
+function addToCart(cart) {
     for (let product of cart) {
         if (product[0] == currentProduct[0] && product[1] == currentProduct[1]) {
-            product[2] += currentProduct[2]
-        } 
-        addToCart(currentProduct)
-        console.table(cart)
+            increaseProductQuantity(product, currentProduct)
+        }
+        pushToCart(currentProduct)
+    
+        console.table(cart) // monitor
     }
 }
+
+// Fonction trouver
+function searchSameProduct() {
+    let sameProduct = cart.find((element) => element[0,1] == currentProduct[0,1])
+}
+
+// Fonction incrémenter le produit existant
+function increaseProductQuantity(product, currentProduct) {
+    product[2] += currentProduct[2]
+}
+
 // Fonction ajouter le produit en cours au panier
-function addToCart(currentProduct) {
+function pushToCart(currentProduct) {
     cart.push(currentProduct)
 }
 
