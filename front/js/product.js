@@ -75,15 +75,18 @@ colorSelector.addEventListener('input', function(e) {
 
 quantitySelector.addEventListener('change', e => currentProduct[2] = e.target.value)
 
-// Si on clique sur le bouton, on essaie d'ajouter 'currentProduct' au 'cart'
-addToCartButton.addEventListener('click', function() {
+// Si on clique sur le bouton, on essaie d'ajouter 'currentProduct' au 'cart' à revoir
+addToCartButton.addEventListener('click', () => {
     if (currentProduct[1] != undefined && currentProduct[1] != '' && currentProduct[2] > 0) {
         addToCart(cart)
     } else {
-        alert('Vous devez choisir une couleur et une quantité !')
-        console.table(cart) // monitor
+        alert('Vous devez choisir une couleur')
+        console.log('click') // monitor
     }
 })
+
+
+
 // Il faut parcourir le 'cart' pour vérifier si un produit identique y est déjà (id et couleur identiques)
 function addToCart(cart) {
     for (let product of cart) {
