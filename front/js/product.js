@@ -47,7 +47,7 @@ function displayColorOptions(product) {
 
 // Créer un array panier
 let cart = []
-console.table(cart) // monitor
+console.log(cart) // monitor
 
 // Définir les noeuds à surveiller
 let colorSelector = document.getElementById('colors')
@@ -59,52 +59,56 @@ let productQuantity = quantitySelector.value
 let productColor = colorSelector.value
 
 // Définir currentProduct à ajouter au tableau panier
-let currentProduct = [productId, productColor, productQuantity]
-console.table (currentProduct) // monitor
+// let currentProduct = {
+//     id: productId,
+//     color: productColor,
+//     quantity: productQuantity
+// }
 
-// Fonctions modifiant l'array 'currentProduct'
-function changeColor() {
-    currentProduct[1] = productColor
-    console.table(currentProduct) // monitor
+class CurrentProduct {
+    constructor(id, color, quantity) {
+        this.id = id;
+        this.color = color;
+        this.quantity = quantity;
+    }
 }
+
+let currentProduct = new CurrentProduct (productId, productColor, productQuantity)
+console.table (currentProduct) // monitor
 
 // Modifier l'array 'currentProduct' lorsqu'un évênement se produit
 colorSelector.addEventListener('input', function(e) {
-    currentProduct[1] = e.target.value
+    currentProduct.color = e.target.value
+    console.table (currentProduct) // monitor
+    console.table (cart) // monitor
 })
-quantitySelector.addEventListener('change', e => currentProduct[2] = e.target.value)
+quantitySelector.addEventListener('change', e => currentProduct.quantity = e.target.value)
 
 // Si on clique sur le bouton, on essaie d'ajouter 'currentProduct' au 'cart' en gérant les exceptions
 addToCartButton.addEventListener('click', () => {
-    if(currentProduct[1] == '') {
+    if(currentProduct.color == '') {
         alert('Veuillez choisir choisir une couleur')
-    } else if(currentProduct[2] < 1) {
+    } else if(currentProduct.quantity < 1) {
         alert('Veuillez indiquer le nombre d\'articles souhaités')
-    } else if(currentProduct[2] > 100) {
+    } else if(currentProduct.quantity > 100) {
         alert('Vous ne pouvez pas dépasser un total de 100 articles !')
     } else {
-        // problème ci-dessous
-        if() {
-        product[2] += currentProduct[2]
-        alert('La quantité a bien été modifiée !')
-        console.table(cart) // monitor
-        // problème ci-dessus
-        } else {
         cart.push(currentProduct)
         alert('Article(s) correctement ajouté(s) !')
         console.table(cart) // monitor
         }
-    }
-})
+    })
+
+
 
 // Trouver le même prod
-function checkSameProduct(cart) {
-    for (let product of cart) {
-        if (product[0] == currentProduct[0] && product[1] == currentProduct[1]) {
-            product[2] += currentProduct[2]
-        }
-    }
-}
+// function checkSameProduct(cart) {
+//     for (let product of cart) {
+//         if (product[0] == currentProduct[0] && product[1] == currentProduct[1]) {
+//             product[2] += currentProduct[2]
+//         }
+//     }
+// }
 
 // Fonction vérifier si le mm produit existe dans le cart
 
