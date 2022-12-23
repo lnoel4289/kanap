@@ -45,10 +45,6 @@ function displayColorOptions(product) {
 // :: Partie 2: Vers le panier ::
 // ::::::::::::::::::::::::::::::
 
-// Créer un array panier
-let cart = []
-console.log(cart) // monitor
-
 // Définir les noeuds à surveiller
 let colorSelector = document.getElementById('colors')
 let quantitySelector = document.getElementById('itemQuantity')
@@ -58,61 +54,65 @@ let addToCartButton = document.getElementById('addToCart')
 let productQuantity = quantitySelector.value
 let productColor = colorSelector.value
 
-// Définir currentProduct à ajouter au tableau panier
-// let currentProduct = {
-//     id: productId,
-//     color: productColor,
-//     quantity: productQuantity
-// }
-
-class CurrentProduct {
-    constructor(id, color, quantity) {
-        this.id = id;
-        this.color = color;
-        this.quantity = quantity;
-    }
-}
-
-let currentProduct = new CurrentProduct (productId, productColor, productQuantity)
-console.table (currentProduct) // monitor
-
 // Modifier l'array 'currentProduct' lorsqu'un évênement se produit
 colorSelector.addEventListener('input', function(e) {
-    currentProduct.color = e.target.value
-    console.table (currentProduct) // monitor
-    console.table (cart) // monitor
+    productColor = e.target.value
 })
-quantitySelector.addEventListener('change', e => currentProduct.quantity = e.target.value)
+quantitySelector.addEventListener('change', e => productQuantity = e.target.value)
+
+// On définit cart
+let cart = localStorage.getItem("cart")
+if(cart == null) {
+    cart = [];
+} else {
+    cart = JSON.parse(cart)
+}
+console.log(cart) //monitor
 
 // Si on clique sur le bouton, on essaie d'ajouter 'currentProduct' au 'cart' en gérant les exceptions
 addToCartButton.addEventListener('click', () => {
+    let currentProduct = {
+        id: productId,
+        color: productColor, 
+        quantity: productQuantity
+    }
     if(currentProduct.color == '') {
         alert('Veuillez choisir choisir une couleur')
     } else if(currentProduct.quantity < 1) {
         alert('Veuillez indiquer le nombre d\'articles souhaités')
     } else if(currentProduct.quantity > 100) {
         alert('Vous ne pouvez pas dépasser un total de 100 articles !')
+    // } else if(currentProduct.id == 'a557292fe5814ea2b15c6ef4bd73ed83' && currentProduct.color == 'Pink') {
+    //      cart[0].quantity += currentProduct.quantity
+    //      localStorage.setItem("cart", JSON.stringify(cart))
     } else {
         cart.push(currentProduct)
-        alert('Article(s) correctement ajouté(s) !')
-        console.table(cart) // monitor
-        }
-    })
+        localStorage.setItem("cart", JSON.stringify(cart))
+    }   
+})
 
+// Ajouter le produit en cours dans la panier du LS(get/set)
+function addToCart() {
+    
+}
 
+// Sauver le panier dans le LS
+function saveCart(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart))
+}
 
-// Trouver le même prod
-// function checkSameProduct(cart) {
-//     for (let product of cart) {
-//         if (product[0] == currentProduct[0] && product[1] == currentProduct[1]) {
-//             product[2] += currentProduct[2]
-//         }
-//     }
-// }
+// Récupérer le panier du LS
+function getCart() {
+    let cart = localStorage.getItem("cart")
+    console.log(cart)
+    if(cart == null) {
+        return []
+    } else {
+        return JSON.parse(cart)
+    }
+}
 
-// Fonction vérifier si le mm produit existe dans le cart
-
-// Il faut parcourir le 'cart' pour vérifier si un produit identique y est déjà (id et couleur identiques)
+// Vérifier si un produit identique est déjà dans le panier (id et couleur identiques)
 // function addToCart(cart) {
 //     for (let product of cart) {
 //         if (product[0] == currentProduct[0] && product[1] == currentProduct[1]) {
@@ -124,18 +124,9 @@ addToCartButton.addEventListener('click', () => {
 //     }
 // }
 
-
-
 // Fonction incrémenter le produit existant
 // function increaseProductQuantity(product) {
 //     product[2] += currentProduct[2]
 // }
-
-// // Fonction ajouter le produit en cours au panier
-// function addNewProduct() {
-//     cart.push(currentProduct)
-// }
-
-// Envoyer le JSON dans le local storage
 
 // END
