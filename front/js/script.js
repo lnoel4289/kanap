@@ -8,7 +8,7 @@ fetch('http://localhost:3000/api/products/')
         document.querySelector('h1').textContent = 'Serveur indisponible'
     })
 
-// injecter innerHTML avec backticks et les infos récupérées
+// Afficher les produits
 function displayProducts(products) {
     for (let product of products) {
         document.getElementById('items').innerHTML += `<a href="./product.html?id=${product._id}">
@@ -19,5 +19,3 @@ function displayProducts(products) {
         </article>`
     }
 }
-
-// Note:Pas super en terme de performances à l'affichage

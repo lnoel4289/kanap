@@ -7,7 +7,7 @@ const productId = new URL(document.location.href).searchParams.get('id')
 const product = fetch(`http://localhost:3000/api/products/${productId}`)
     .then((res) => res.json())
     .then((product) => fillProductPage(product))
-    .catch((error) => {
+    .catch(() => {
         document.getElementById('title').textContent = 'Impossible d\'afficher le produit'
     })
 
