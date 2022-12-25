@@ -41,6 +41,7 @@ function displayColorOptions(product) {
     }
 }
 
+
 // ::::::::::::::::::::::::::::::
 // :: Partie 2: Vers le panier ::
 // ::::::::::::::::::::::::::::::
@@ -69,6 +70,7 @@ if(cart == null) {
 }
 console.log(cart) //monitor
 
+
 // Si on clique sur le bouton, on essaie d'ajouter 'currentProduct' au 'cart' en gérant les exceptions
 addToCartButton.addEventListener('click', () => {
     let currentProduct = {
@@ -78,7 +80,7 @@ addToCartButton.addEventListener('click', () => {
     }
     if(currentProduct.color == '') {
         alert('Veuillez choisir choisir une couleur')
-    } else if(currentProduct.quantity < 1) {
+    } else if(currentProduct.quantity < 1 || currentProduct.quantity == NaN || Number.isInteger(currentProduct.quantity) == false) {
         alert('Veuillez indiquer le nombre d\'articles souhaités')
     } else if(currentProduct.quantity > 100) {
         alert('Vous ne pouvez pas dépasser un total de 100 articles !')
@@ -111,6 +113,8 @@ function getCart() {
         return JSON.parse(cart)
     }
 }
+
+
 
 // Vérifier si un produit identique est déjà dans le panier (id et couleur identiques)
 // function addToCart(cart) {

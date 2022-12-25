@@ -4,11 +4,11 @@ if(cart == null || cart == [] || cart == undefined) {
     document.querySelector('h1').textContent = 'Votre panier est vide'
 } else {
     cart = JSON.parse(cart)
-    console.log(cart) // monitor
+    displayItems()
 }
 
 // Appeler product dans l'API
-function display() {
+function displayItems() {
   for(let item of cart) {
     fetch(`http://localhost:3000/api/products/${item.id}`)
     .then(res => res.json())
@@ -37,7 +37,25 @@ function display() {
     })
   }
 }
-display() // test
+// Calculer la quantité totale
+function calculateTotalQuantity() {
+  
+}
+// Calculer le prix total
+function calculateTotalPrice() {
+  
+}
+
+// Afficher la quantité totale
+function TotalQuantity() {
+  document.getElementById('totalQuantity').textContent = ''
+}
+// Afficher le prix total
+function TotalPrice() {
+  document.getElementById('totalPrice').textContent = ''
+}
+
+
 
 // MODIFIER LE PANIER
 // Modifier la quantité
