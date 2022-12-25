@@ -4,10 +4,11 @@ if(cart == null || cart == [] || cart == undefined) {
     document.querySelector('h1').textContent = 'Votre panier est vide'
 } else {
     cart = JSON.parse(cart)
-    displayItems()
 }
 
-// Appeler product dans l'API
+displayItems()
+
+// Afficher les items du cart
 function displayItems() {
   for(let item of cart) {
     fetch(`http://localhost:3000/api/products/${item.id}`)
@@ -33,10 +34,37 @@ function displayItems() {
             </div>
           </div>
         </div>
-      </article>`
-    })
+      </article>`})
+      .then(() => {
+        document.querySelector('.deleteItem').addEventListener('click', () => {
+          let cart = localStorage.getItem("cart")
+          if(cart == null || cart == [] || cart == undefined) {
+          document.querySelector('h1').textContent = 'Votre panier est vide'
+          } else {
+          cart = JSON.parse(cart)
+          console.log('cart')//monitor
+          }
+        })
+      })
+    }
   }
+
+// Sauvegarder le panier dans le LS
+function saveCart(cart) {
+  localStorage.setItem("cart", JSON.stringify(cart))
 }
+// Supprimer un produit
+
+// let point = document.querySelector('h1');
+// console.log(point);
+// point.addEventListener('click', function() {
+//   console.log(cart)})
+// cart = cart.filter(p => p.id != item.id || p.color != item.color);
+// console.log(cart)
+// saveCart(cart)});
+
+
+// Modifier la quantité
 // Calculer la quantité totale
 function calculateTotalQuantity() {
   
@@ -55,13 +83,9 @@ function TotalPrice() {
   document.getElementById('totalPrice').textContent = ''
 }
 
-
-
-// MODIFIER LE PANIER
-// Modifier la quantité
-// Supprimer un produit
-
-
 // FORMULAIRE
 
 //  VERS CONFIRMATION
+
+
+// + sort items

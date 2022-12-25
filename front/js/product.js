@@ -64,7 +64,7 @@ addToCartButton.addEventListener('click', () => {
     let currentProduct = {
         id: productId,
         color: productColor, 
-        quantity: productQuantity.valueOf()
+        quantity: Number(productQuantity)
     }
     if(currentProduct.color == '') {
         alert('Veuillez choisir choisir une couleur')
@@ -76,17 +76,18 @@ addToCartButton.addEventListener('click', () => {
         addToCart(currentProduct)
     }   
 })
+
 // Ajouter le produit en cours dans la panier du LS(get/set)
 function addToCart(currentProduct) {
     let cart = getCart()
     let foundItem = cart.find(item => item.id == currentProduct.id && item.color == currentProduct.color)
     if(foundItem != undefined) {
-        foundItem.quantity = Number(foundItem.quantity) + Number(currentProduct.quantity);
+        foundItem.quantity = foundItem.quantity + currentProduct.quantity;
     } else {
         cart.push(currentProduct)        
     }
     console.table(cart)// monitor
-    localStorage.setItem("cart", JSON.stringify(cart))
+    saveCart(cart)
 }
 // Récupérer le panier du LS
 function getCart() {
@@ -96,6 +97,10 @@ function getCart() {
     } else {
         return JSON.parse(cart)
     }
+}
+// Sauvegarder le panier dans le LS
+function saveCart(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart))
 }
 
 // A factoriser + message de confirmation ajout du produit
