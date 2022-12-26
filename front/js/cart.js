@@ -1,12 +1,10 @@
-// Appeler le cart du LS
+// Appeler le cart du LS - devrait être une promise
 let cart = localStorage.getItem("cart")
 if(cart == null || cart == [] || cart == undefined) {
     document.querySelector('h1').textContent = 'Votre panier est vide'
 } else {
     cart = JSON.parse(cart)
 }
-
-displayItems()
 
 // Afficher les items du cart
 function displayItems() {
@@ -34,20 +32,16 @@ function displayItems() {
             </div>
           </div>
         </div>
-      </article>`})
-      .then(() => {
-        document.querySelector('.deleteItem').addEventListener('click', () => {
-          let cart = localStorage.getItem("cart")
-          if(cart == null || cart == [] || cart == undefined) {
-          document.querySelector('h1').textContent = 'Votre panier est vide'
-          } else {
-          cart = JSON.parse(cart)
-          console.log('cart')//monitor
-          }
-        })
-      })
-    }
+      </article>`
+    })
+    .catch(() => document.querySelector('h1').textContent = 'Serveur indisponible')
   }
+}
+displayItems()
+
+// Chainer l'affichage des items avec la surveillance des évênements
+
+
 
 // Sauvegarder le panier dans le LS
 function saveCart(cart) {
@@ -83,7 +77,24 @@ function TotalPrice() {
   document.getElementById('totalPrice').textContent = ''
 }
 
-// FORMULAIRE
+
+
+// FORMULAIRE --------------------------
+
+// Points de surveillance
+let firstName = document.getElementById('firstName')
+let lastName = document.getElementById('lastName')
+let address = document.getElementById('address')
+let city = document.getElementById('city')
+let email = document.getElementById('email')
+
+// Réponses
+let firstNameErrorMsg = document.getElementById('firstNameErrorMsg')
+let lastNameErrorMsg = document.getElementById('lastNameErrorMsg')
+let addressErrorMsg = document.getElementById('addressErrorMsg')
+let cityErrorMsg = document.getElementById('cityErrorMsg')
+let emailErrorMsg = document.getElementById('emailErrorMsg')
+
 
 //  VERS CONFIRMATION
 
