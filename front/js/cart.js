@@ -1,13 +1,21 @@
-// Appeler le cart du LS - devrait être une promise
-let cart = localStorage.getItem("cart")
-if(cart == null || cart == [] || cart == undefined) {
-    document.querySelector('h1').textContent = 'Votre panier est vide'
-} else {
-    cart = JSON.parse(cart)
+// Appeler le cart du LS
+function getCart() {
+  let cart = localStorage.getItem("cart");
+  if(cart == null || cart == [] || cart == undefined) {
+      document.querySelector('h1').textContent = 'Votre panier est vide'
+  } else {
+      return JSON.parse(cart)
+  }
+}
+
+// Sauvegarder le panier dans le LS
+function saveCart(cart) {
+  localStorage.setItem("cart", JSON.stringify(cart))
 }
 
 // Afficher les items du cart
 function displayItems() {
+  let cart = getCart();
   for(let item of cart) {
     fetch(`http://localhost:3000/api/products/${item.id}`)
     .then(res => res.json())
@@ -35,6 +43,7 @@ function displayItems() {
       </article>`
     })
     .catch(() => document.querySelector('h1').textContent = 'Serveur indisponible')
+    .then(() => console.log('affichage terminé'))
   }
 }
 displayItems()
@@ -43,10 +52,7 @@ displayItems()
 
 
 
-// Sauvegarder le panier dans le LS
-function saveCart(cart) {
-  localStorage.setItem("cart", JSON.stringify(cart))
-}
+
 // Supprimer un produit
 
 // let point = document.querySelector('h1');

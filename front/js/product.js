@@ -77,7 +77,7 @@ addToCartButton.addEventListener('click', () => {
     }   
 })
 
-// Ajouter le produit en cours dans la panier du LS(get/set)
+// Ajouter le produit en cours dans la panier du LS
 function addToCart(currentProduct) {
     let cart = getCart()
     let foundItem = cart.find(item => item.id == currentProduct.id && item.color == currentProduct.color)
@@ -86,7 +86,6 @@ function addToCart(currentProduct) {
     } else {
         cart.push(currentProduct)        
     }
-    console.table(cart)// monitor
     saveCart(cart)
 }
 // Récupérer le panier du LS
