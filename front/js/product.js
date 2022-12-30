@@ -42,9 +42,7 @@ function displayColorOptions(product) {
 }
 
 
-// ::::::::::::::::::::::::::::::
-// :: Partie 2: Vers le panier ::
-// ::::::::::::::::::::::::::::::
+// Partie 2: Vers le panier
 
 // Définir les noeuds à surveiller
 let colorSelector = document.getElementById('colors')
