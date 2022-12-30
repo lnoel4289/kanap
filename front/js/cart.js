@@ -1,4 +1,4 @@
-// Appeler le cart du LS
+// Appeler le panier du LS
 function getCart() {
   let cart = localStorage.getItem("cart");
   if(cart == null || cart == [] || cart == undefined) {
@@ -46,10 +46,18 @@ fetch(`http://localhost:3000/api/products/${item.id}`)
 // Afficher les items du panier
 function displayItems() {
   let cart = getCart();
-  for(let item of cart) {
-      displayItem(item)
+  for(let kanap of cart) {
+      displayItem(kanap)
+      console.log('good')
   }
 }
+
+displayItems()
+console.log('ok')
+
+// afficher le DOM avant de le manipuler
+
+
 
 
 
