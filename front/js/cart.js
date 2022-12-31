@@ -14,50 +14,64 @@ function saveCart(cart) {
 }
 
 // Afficher un item du panier
-function displayItem(item) {
-fetch(`http://localhost:3000/api/products/${item.id}`)
-.then(res => res.json())
-.then((product) => {
-  document.getElementById('cart__items').innerHTML +=`<article class="cart__item" data-id="${product._id}" data-color="${item.color}">
-    <div class="cart__item__img">
-      <img src="${product.imageUrl}" alt="${product.altTxt}">
-    </div>
-    <div class="cart__item__content">
-      <div class="cart__item__content__description">
-        <h2>${product.name}</h2>
-        <p>${item.color}</p>
-        <p>${product.price} €</p>
+async function displayItem(item) {
+await fetch(`http://localhost:3000/api/products/${item.id}`)
+  .then(res => res.json())
+  .then((product) => {
+    document.getElementById('cart__items').innerHTML +=`<article class="cart__item" data-id="${product._id}" data-color="${item.color}">
+      <div class="cart__item__img">
+        <img src="${product.imageUrl}" alt="${product.altTxt}">
       </div>
-      <div class="cart__item__content__settings">
-        <div class="cart__item__content__settings__quantity">
-          <p>Qté : </p>
-          <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item.quantity}">
+      <div class="cart__item__content">
+        <div class="cart__item__content__description">
+          <h2>${product.name}</h2>
+          <p>${item.color}</p>
+          <p>${product.price} €</p>
         </div>
-        <div class="cart__item__content__settings__delete">
-          <p class="deleteItem">Supprimer</p>
+        <div class="cart__item__content__settings">
+          <div class="cart__item__content__settings__quantity">
+            <p>Qté : </p>
+            <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item.quantity}">
+          </div>
+          <div class="cart__item__content__settings__delete">
+            <p class="deleteItem">Supprimer</p>
+          </div>
         </div>
       </div>
-    </div>
-  </article>`
-})
-.catch(() => document.querySelector('h1').textContent = 'Serveur indisponible')
+    </article>`
+  })
+  .catch(() => document.querySelector('h1').textContent = 'Serveur indisponible')
 }
 
 // Afficher les items du panier
-function displayItems() {
+async function displayItems() {
   let cart = getCart();
   for(let kanap of cart) {
-      displayItem(kanap)
-      console.log('good')
+    await displayItem(kanap)
   }
-}
+};
 
-displayItems()
-console.log('ok')
+// Modifier le panier
+async function modifyCart() {
+  await displayItems();
+  let tousLesSupprimer = document.querySelectorAll('.deleteItem');
+  tousLesSupprimer.forEach(supprimer => deleteItem(supprimer.closest('.cart__item')))
+};
+
+// Supprimer un produit
+function deleteItem(cible) {
+  console.log(cible)
+};
+
+// Modifier la quantité d'un produit
+function modifyQuantity() {
+  document.querySelector('.itemQuantity').addEventListener('change', () => console.log('kiki'));
+};
 
 // afficher le DOM avant de le manipuler
-
-
+modifyCart();
+  
+  
 
 
 
