@@ -1,16 +1,29 @@
+displayCart();
+
+// Modifier le panier
+async function displayCart() {
+  await displayItems();
+  itemToDelete();
+  quantityToChange();
+};
+
+// Afficher les items du panier
+async function displayItems() {
+  let cart = getCart();
+  for(let kanap of cart) {
+    await displayItem(kanap)
+  }
+};
+
 // Appeler le panier du LS
 function getCart() {
   let cart = localStorage.getItem("cart");
+  console.log(cart);
   if(cart == null || cart == [] || cart == undefined) {
       document.querySelector('h1').textContent = 'Votre panier est vide'
   } else {
       return JSON.parse(cart)
   }
-}
-
-// Sauvegarder le panier dans le LS
-function saveCart(cart) {
-  localStorage.setItem("cart", JSON.stringify(cart))
 }
 
 // Afficher un item du panier
@@ -43,22 +56,7 @@ await fetch(`http://localhost:3000/api/products/${item.id}`)
   .catch(() => document.querySelector('h1').textContent = 'Serveur indisponible')
 }
 
-// Afficher les items du panier
-async function displayItems() {
-  let cart = getCart();
-  for(let kanap of cart) {
-    await displayItem(kanap)
-  }
-};
-
-// Modifier le panier
-async function modifyCart() {
-  await displayItems();
-  itemToDelete();
-  quantityToChange();
-};
-
-// Supprimer un produit
+// Surveiller les produits supprimables
 function itemToDelete() {
   let tousLesSupprimer = document.querySelectorAll('.deleteItem');
   for (let supprimer of tousLesSupprimer) {
@@ -66,47 +64,57 @@ function itemToDelete() {
   }
 };
 
-// Supprimer un produit
+// Supprimer le produit du dom
 function removeItem(bidule) {
-  let trucToDelete = bidule.closest('.cart__item');
-  trucToDelete.remove();
-  console.log(trucToDelete.dataset.color);
-  deleteItemFromCart(trucToDelete)
+  let cartItem = bidule.closest('.cart__item');
+  cartItem.remove();
+  deleteItemFromCart(cartItem)
 };
 
-function deleteItemFromCart(trucasup) {
+// Supprimer le produit du localstorage
+function deleteItemFromCart(trucASup) {
   let cart = getCart();
-  cart = cart.filter(p => p.id != trucasup.dataset.id || p.color != trucasup.dataset.color);
+  cart = cart.filter(p => p.id != trucASup.dataset.id || p.color != trucASup.dataset.color);
   saveCart(cart);
 };
+// Indiquer lorsque le panier est vide
+// Gérer l'erreur lorsque cart est null
+// Afficher panier vide lors de la suppression du dernier article
 
-// Modifier la quantité d'un produit
-function modifyQuantityInCart() {
-
+// Sauvegarder le panier dans le LS
+function saveCart(cart) {
+  localStorage.setItem("cart", JSON.stringify(cart))
 }
 
-// Modifier la quantité d'un produit
+// Surveiller les quantités modifiables
 function quantityToChange() {
-  let tousLesQte = document.querySelectorAll('itemQuantity');
-  for (let qte of tousLesQte) {
-    qte.input.addEventListener('input', () => modifyQuantityInCart());
+  let toutesLesQte = document.querySelectorAll('.itemQuantity');
+  for (let qte of toutesLesQte) {
+    qte.addEventListener('change', () => modifyQuantityToCart(qte));
   }
 };
 
-modifyCart();
-  
-  // Supprimer un produit
 
-// let point = document.querySelector('h1');
-// console.log(point);
-// point.addEventListener('click', function() {
-//   console.log(cart)})
-// cart = cart.filter(p => p.id != item.id || p.color != item.color);
-// console.log(cart)
-// saveCart(cart)});
+// Modifier la quantité d'un produit
+function modifyQuantityToCart(qte) {
+  let cartItem = qte.closest('.cart__item');
+  let cart = getCart();
+  let foundItem = cart.find(p => p.id == cartItem.dataset.id && p.color == cartItem.dataset.color);
+  checkLegalQtyValue(qte);
+  foundItem.quantity = Number(qte.value);
+  saveCart(cart);
+};
+
+function checkLegalQtyValue(num) {
+  if(num.value < 1) {
+    num.value = 1
+  } else if(num.value > 100) {
+    num.value = 100
+  }
+}
+// Gérer aussi le fait que les nombres doivent être entiers (voir également sur product.js)
 
 
-// Modifier la quantité
 // Calculer la quantité totale
 function calculateTotalQuantity() {
   
