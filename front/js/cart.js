@@ -54,31 +54,48 @@ async function displayItems() {
 // Modifier le panier
 async function modifyCart() {
   await displayItems();
-  let tousLesSupprimer = document.querySelectorAll('.deleteItem');
-  tousLesSupprimer.forEach(supprimer => deleteItem(supprimer.closest('.cart__item')))
+  itemToDelete();
+  quantityToChange();
 };
 
 // Supprimer un produit
-function deleteItem(cible) {
-  console.log(cible)
+function itemToDelete() {
+  let tousLesSupprimer = document.querySelectorAll('.deleteItem');
+  for (let supprimer of tousLesSupprimer) {
+    supprimer.addEventListener('click', () => removeItem(supprimer))
+  }
+};
+
+// Supprimer un produit
+function removeItem(bidule) {
+  let trucToDelete = bidule.closest('.cart__item');
+  trucToDelete.remove();
+  console.log(trucToDelete.dataset.color);
+  deleteItemFromCart(trucToDelete)
+};
+
+function deleteItemFromCart(trucasup) {
+  let cart = getCart();
+  cart = cart.filter(p => p.id != trucasup.dataset.id || p.color != trucasup.dataset.color);
+  saveCart(cart);
 };
 
 // Modifier la quantité d'un produit
-function modifyQuantity() {
-  document.querySelector('.itemQuantity').addEventListener('change', () => console.log('kiki'));
+function modifyQuantityInCart() {
+
+}
+
+// Modifier la quantité d'un produit
+function quantityToChange() {
+  let tousLesQte = document.querySelectorAll('itemQuantity');
+  for (let qte of tousLesQte) {
+    qte.input.addEventListener('input', () => modifyQuantityInCart());
+  }
 };
 
-// afficher le DOM avant de le manipuler
 modifyCart();
   
-  
-
-
-
-
-
-
-// Supprimer un produit
+  // Supprimer un produit
 
 // let point = document.querySelector('h1');
 // console.log(point);
