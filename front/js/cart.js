@@ -1,10 +1,12 @@
 displayCart();
 
-// Modifier le panier
+// Afficher la page panier
 async function displayCart() {
   await displayItems();
   itemToDelete();
   quantityToChange();
+  totalQuantity();
+  totalPrice();
 };
 
 // Afficher les items du panier
@@ -18,13 +20,12 @@ async function displayItems() {
 // Appeler le panier du LS
 function getCart() {
   let cart = localStorage.getItem("cart");
-  console.log(cart);
   if(cart == null || cart == [] || cart == undefined) {
       document.querySelector('h1').textContent = 'Votre panier est vide'
   } else {
       return JSON.parse(cart)
   }
-}
+};
 
 // Afficher un item du panier
 async function displayItem(item) {
@@ -54,7 +55,7 @@ await fetch(`http://localhost:3000/api/products/${item.id}`)
     </article>`
   })
   .catch(() => document.querySelector('h1').textContent = 'Serveur indisponible')
-}
+};
 
 // Surveiller les produits supprimables
 function itemToDelete() {
@@ -84,7 +85,7 @@ function deleteItemFromCart(trucASup) {
 // Sauvegarder le panier dans le LS
 function saveCart(cart) {
   localStorage.setItem("cart", JSON.stringify(cart))
-}
+};
 
 // Surveiller les quantités modifiables
 function quantityToChange() {
@@ -94,7 +95,6 @@ function quantityToChange() {
   }
 };
 
-
 // Modifier la quantité d'un produit
 function modifyQuantityToCart(qte) {
   let cartItem = qte.closest('.cart__item');
@@ -103,6 +103,8 @@ function modifyQuantityToCart(qte) {
   checkLegalQtyValue(qte);
   foundItem.quantity = Number(qte.value);
   saveCart(cart);
+  totalQuantity();
+  totalPrice();
 };
 
 function checkLegalQtyValue(num) {
@@ -114,25 +116,29 @@ function checkLegalQtyValue(num) {
 }
 // Gérer aussi le fait que les nombres doivent être entiers (voir également sur product.js)
 
-
-// Calculer la quantité totale
-function calculateTotalQuantity() {
-  
-}
-// Calculer le prix total
-function calculateTotalPrice() {
-  
-}
-
 // Afficher la quantité totale
-function TotalQuantity() {
-  document.getElementById('totalQuantity').textContent = ''
-}
-// Afficher le prix total
-function TotalPrice() {
-  document.getElementById('totalPrice').textContent = ''
-}
+function totalQuantity() {
+  let cart = getCart();
+  let totalQuantity = 0;
+  cart.forEach(calculateTotalQuantity);
+  function calculateTotalQuantity(item) {
+    totalQuantity += item.quantity;
+  };
+  document.getElementById('totalQuantity').textContent = totalQuantity;
+};
 
+// Calculer le prix total
+function totalPrice() {
+  let cart = getCart();
+  let totalPrice = 0;
+  document.getElementById('totalPrice').textContent = totalPrice;
+};
+
+// function myFonction () {
+//   let foundProduct = 
+//   let price = 
+//   totalPrice += (item.quantity*foundProduct.price)
+// }
 
 
 // FORMULAIRE --------------------------
