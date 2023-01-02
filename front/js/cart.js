@@ -45,7 +45,7 @@ function displayProduct(prod, itm) {
         <div class="cart__item__content__description">
           <h2>${prod.name}</h2>
           <p>${itm.color}</p>
-          <p>${prod.price} €</p>
+          <p><span>${prod.price}</span> €</p>
         </div>
         <div class="cart__item__content__settings">
           <div class="cart__item__content__settings__quantity">
@@ -57,8 +57,8 @@ function displayProduct(prod, itm) {
           </div>
         </div>
       </div>
-    </article>`
-}
+    </article>`;
+};
 
 // Surveiller les produits supprimables
 function itemToDelete() {
@@ -80,6 +80,8 @@ function deleteItemFromCart(trucASup) {
   let cart = getCart();
   cart = cart.filter(p => p.id != trucASup.dataset.id || p.color != trucASup.dataset.color);
   saveCart(cart);
+  totalQuantity();
+  totalPrice();
 };
 // Indiquer lorsque le panier est vide
 // Gérer l'erreur lorsque cart est null
@@ -118,6 +120,7 @@ function checkLegalQtyValue(num) {
   }
 }
 // Gérer aussi le fait que les nombres doivent être entiers (voir également sur product.js)
+// Gérer aussi le fait qu on peut dépasser 100 en ajoutant depuis la page product
 
 // Afficher la quantité totale
 function totalQuantity() {
@@ -130,15 +133,14 @@ function totalQuantity() {
   document.getElementById('totalQuantity').textContent = totalQuantity;
 };
 
-// Calculer le prix total
+// Affucher le prix total
 function totalPrice() {
   let totalPrice = 0;
   let cartItems = document.querySelectorAll('.cart__item');
   cartItems.forEach(calculateTotalPrice);
   function calculateTotalPrice(cartItem) {
     let quantity = cartItem.querySelector('.itemQuantity').value;
-    let price = cartItem.querySelector('h2 + p + p').textContent;
-    console.log(price);
+    let price = cartItem.querySelector('h2 + p + p > span').textContent;
     totalPrice += quantity*price
   }
   document.getElementById('totalPrice').textContent = totalPrice
