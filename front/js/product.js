@@ -4,7 +4,7 @@
 const productId = new URL(document.location.href).searchParams.get('id')
 
 // Requête (GET) product via l'id
-const product = fetch(`http://localhost:3000/api/products/${productId}`)
+fetch(`http://localhost:3000/api/products/${productId}`)
     .then((res) => res.json())
     .then((product) => fillProductPage(product))
     .catch(() => {
@@ -58,7 +58,7 @@ colorSelector.addEventListener('input', e => productColor = e.target.value)
 quantitySelector.addEventListener('change', e => productQuantity = e.target.value)
 
 // Si on clique sur le bouton, on essaie d'ajouter 'currentProduct' au 'cart' en gérant les exceptions
-addToCartButton.addEventListener('click', () => {
+addToCartButton.addEventListener('click', (product) => {
     let currentProduct = {
         id: productId,
         color: productColor, 
@@ -101,3 +101,4 @@ function saveCart(cart) {
 }
 
 // A factoriser + message de confirmation ajout du produit
+// Gérer la quantité pouvant dépasser 100 dans le cart (?)
