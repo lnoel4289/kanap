@@ -151,18 +151,21 @@ function totalPrice() {
 // FORMULAIRE --------------------------
 
 // Points de surveillance
-let firstName = document.getElementById('firstName')
-let lastName = document.getElementById('lastName')
-let address = document.getElementById('address')
-let city = document.getElementById('city')
-let email = document.getElementById('email')
+let firstName = document.getElementById('firstName');
+let lastName = document.getElementById('lastName');
+let address = document.getElementById('address');
+let city = document.getElementById('city');
+let email = document.getElementById('email');
+let order = document.getElementById('order');
 
 // Réponses
-let firstNameErrorMsg = document.getElementById('firstNameErrorMsg')
-let lastNameErrorMsg = document.getElementById('lastNameErrorMsg')
-let addressErrorMsg = document.getElementById('addressErrorMsg')
-let cityErrorMsg = document.getElementById('cityErrorMsg')
-let emailErrorMsg = document.getElementById('emailErrorMsg')
+let firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
+let lastNameErrorMsg = document.getElementById('lastNameErrorMsg');
+let addressErrorMsg = document.getElementById('addressErrorMsg');
+let cityErrorMsg = document.getElementById('cityErrorMsg');
+let emailErrorMsg = document.getElementById('emailErrorMsg');
+
+
 
 
 //  VERS CONFIRMATION
