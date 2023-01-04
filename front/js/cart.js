@@ -158,6 +158,18 @@ let city = document.getElementById('city');
 let email = document.getElementById('email');
 let order = document.getElementById('order');
 
+// Exemple de test
+function validateField() {
+  let firstName = document.getElementById('firstName');
+  let firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
+  let pattern = /^[a-zA-Z]{1,50}([ -][a-zA-Z]{1,50})*$/;
+  function testField() {
+    let result = pattern.test(firstName);
+    console.log(result)};
+  firstName.addEventListener('change', () => testField());
+  
+  };validateField()
+
 // Réponses
 let firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
 let lastNameErrorMsg = document.getElementById('lastNameErrorMsg');
@@ -165,7 +177,16 @@ let addressErrorMsg = document.getElementById('addressErrorMsg');
 let cityErrorMsg = document.getElementById('cityErrorMsg');
 let emailErrorMsg = document.getElementById('emailErrorMsg');
 
-
+function regex(Variable) {
+	switch (Variable) {
+		case "texte"   : reg = new RegExp("^(.|\n|\r|\n\r){3,}$","i"); break; // texte de 3 caractères minimum, retour à la ligne possible  
+		case "mail"    : reg = new RegExp("^([a-zA-Z0-9_-])+([.]?[a-zA-Z0-9_-]{1,})*@([a-zA-Z0-9-_]{2,}[.])+[a-zA-Z]{2,3}\\s*$","i"); break; // adresse mail valide customer@fai.ext  
+		
+		case "fichier" : reg = new RegExp("^.+\.[a-zA-Z]{2,5}$","i"); break; // fichiers à uploader  
+		// Ajoutez ici vos expressions  
+	}
+	return reg;
+};
 
 
 //  VERS CONFIRMATION
