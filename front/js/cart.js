@@ -151,6 +151,7 @@ function totalPrice() {
 
 // FORMULAIRE --------------------------
 
+
 //  Objet contact pour requête POST
 let contact = {
   firstName: document.getElementById('firstName').value,
@@ -177,57 +178,68 @@ let firstName = new FormField(
   'Le prénom actuel n\'est pas un prénom valide. Veuillez poursuivre ou corriger votre saisie',
   /^[a-zA-ZÀ-ÿ]([ -]?[a-zA-ZÀ-ÿ]){0,49}$/
 );
-
-
+// Instance lastName
+let lastName = new FormField(
+  document.getElementById('lastName'),
+  document.getElementById('lastNameErrorMsg'),
+  'Le Nom actuel n\'est pas un Nom valide. Veuillez poursuivre ou corriger votre saisie',
+  /^[a-zA-ZÀ-ÿ]([' -]?[a-zA-ZÀ-ÿ]){0,49}$/
+);
+// Instance address
+let address = new FormField(
+  document.getElementById('address'),
+  document.getElementById('addressErrorMsg'),
+  'Le Nom actuel n\'est pas un Nom valide. Veuillez poursuivre ou corriger votre saisie',
+  /^[\w\d\s.,#-]*[a-zA-Z]$/
+);
+// Instance city
+let city = new FormField(
+  document.getElementById('city'),
+  document.getElementById('cityErrorMsg'),
+  'Le Nom actuel n\'est pas un Nom valide. Veuillez poursuivre ou corriger votre saisie',
+  /^[a-zA-Z]([' -]?[a-zA-Z]){0,59}$/
+);
+// Instance email
+let email = new FormField(
+  document.getElementById('email'),
+  document.getElementById('emailErrorMsg'),
+  'Adresse mail invalide. Veuillez corriger ou terminer la saisie.',
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+);
 
 function validateField(formField) {
   function testField() {
     let result = formField.pattern.test(formField.field.value);
     if(result == true || formField.field.value == '') {
       formField.msgField.textContent = '';
-      contact.firstName = formField.field.value;
+      updateContact();
       console.log(contact);
       } else {
       formField.msgField.textContent = formField.msgTxt;
     }
   }
   formField.field.addEventListener('input', testField);
+};
+
+function updateContact() {
+  contact.firstName = document.getElementById('firstName').value;
+    contact.lastName = document.getElementById('lastName').value;
+    contact.address = document.getElementById('address').value;
+    contact.city = document.getElementById('city').value;
+    contact.email = document.getElementById('email').value;
+    lsStoreContact();
 }
-validateField(firstName)
 
+function lsStoreContact() {
+  localStorage.setItem('contact', JSON.stringify(contact));
+}
 
-
-
-
-// // Fonction de test
-// function validateField() {
-//   let firstName = document.getElementById('firstName');
-//   let firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
-//   let pattern = /^[a-zA-ZÀ-ÿ]([ -]?[a-zA-ZÀ-ÿ]){0,49}$/;
-//   function testField() {
-//     let result = pattern.test(firstName.value);
-//     if(result == true || firstName.value == '') {
-//       firstNameErrorMsg.textContent = '';
-//       contact.firstName = firstName.value;
-//       console.log(contact);
-//     } else {
-//       firstNameErrorMsg.textContent = 'Le prénom actuel n\'est pas un prénom valide. Veuillez poursuivre ou corriger votre saise';
-//     }
-//   }
-//   firstName.addEventListener('input', testField);
-// }
-// validateField()
-
-
-
-
-
-// Points de surveillance
-
-// lastName = document.getElementById('lastName');
-// address = document.getElementById('address');
-// city = document.getElementById('city');
-// email = document.getElementById('email');
+// Exécution des fonctions de validation des champs du formulaire
+validateField(firstName);
+validateField(lastName);
+validateField(address);
+validateField(city);
+validateField(email);
 
 
 // Submit button
@@ -237,21 +249,6 @@ validateField(firstName)
 
 // Si le test est bon on push l'entrée dans l'objet contact:{}
 // De même si changement autorisé on push l'article du panier dans l'array products[] grâce à l'id
-
-
-// Réponses
-
-// let lastNameErrorMsg = document.getElementById('lastNameErrorMsg');
-// let addressErrorMsg = document.getElementById('addressErrorMsg');
-// let cityErrorMsg = document.getElementById('cityErrorMsg');
-// let emailErrorMsg = document.getElementById('emailErrorMsg');
-
-function regex(Variable) {
-	switch (Variable) {
-		case "mail"    : reg = new RegExp("^([a-zA-Z0-9_-])+([.]?[a-zA-Z0-9_-]{1,})*@([a-zA-Z0-9-_]{2,}[.])+[a-zA-Z]{2,3}\\s*$","i"); break; // adresse mail valide customer@fai.ext
-	}
-	return reg;
-};
 
 
 //  VERS CONFIRMATION
