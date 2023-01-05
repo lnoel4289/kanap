@@ -133,7 +133,7 @@ function totalQuantity() {
   document.getElementById('totalQuantity').textContent = totalQuantity;
 };
 
-// Affucher le prix total
+// Afficher le prix total
 function totalPrice() {
   let totalPrice = 0;
   let cartItems = document.querySelectorAll('.cart__item');
@@ -148,42 +148,55 @@ function totalPrice() {
 
 
 
+
 // FORMULAIRE --------------------------
 
-// Points de surveillance
-let firstName = document.getElementById('firstName');
-let lastName = document.getElementById('lastName');
-let address = document.getElementById('address');
-let city = document.getElementById('city');
-let email = document.getElementById('email');
-let order = document.getElementById('order');
 
-// Exemple de test
-function validateField() {
+// Fonction de test
+function validateField(fld, msg, ptrn) {
   let firstName = document.getElementById('firstName');
   let firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
-  let pattern = /^[a-zA-Z]{1,50}([ -][a-zA-Z]{1,50})*$/;
+  let pattern = /^[a-zA-ZÀ-ÿ]([ -]?[a-zA-ZÀ-ÿ]){0,49}$/;
   function testField() {
-    let result = pattern.test(firstName);
-    console.log(result)};
-  firstName.addEventListener('change', () => testField());
-  
-  };validateField()
+    let result = pattern.test(firstName.value);
+    if(result == true || firstName.value == '') {
+      firstNameErrorMsg.textContent = ''
+    } else {
+      firstNameErrorMsg.textContent = 'Unvalid'
+    }
+  };
+  firstName.addEventListener('change', testField);
+}
+validateField()
+
+
+// Points de surveillance
+
+// let lastName = document.getElementById('lastName');
+// let address = document.getElementById('address');
+// let city = document.getElementById('city');
+// let email = document.getElementById('email');
+
+
+// Submit button
+
+// let order = document.getElementById('order');
+
+
+// Si le test est bon on push l'entrée dans l'objet contact:{}
+// De même si changement autorisé on push l'article du panier dans l'array products[] grâce à l'id
+
 
 // Réponses
-let firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
-let lastNameErrorMsg = document.getElementById('lastNameErrorMsg');
-let addressErrorMsg = document.getElementById('addressErrorMsg');
-let cityErrorMsg = document.getElementById('cityErrorMsg');
-let emailErrorMsg = document.getElementById('emailErrorMsg');
+
+// let lastNameErrorMsg = document.getElementById('lastNameErrorMsg');
+// let addressErrorMsg = document.getElementById('addressErrorMsg');
+// let cityErrorMsg = document.getElementById('cityErrorMsg');
+// let emailErrorMsg = document.getElementById('emailErrorMsg');
 
 function regex(Variable) {
 	switch (Variable) {
-		case "texte"   : reg = new RegExp("^(.|\n|\r|\n\r){3,}$","i"); break; // texte de 3 caractères minimum, retour à la ligne possible  
-		case "mail"    : reg = new RegExp("^([a-zA-Z0-9_-])+([.]?[a-zA-Z0-9_-]{1,})*@([a-zA-Z0-9-_]{2,}[.])+[a-zA-Z]{2,3}\\s*$","i"); break; // adresse mail valide customer@fai.ext  
-		
-		case "fichier" : reg = new RegExp("^.+\.[a-zA-Z]{2,5}$","i"); break; // fichiers à uploader  
-		// Ajoutez ici vos expressions  
+		case "mail"    : reg = new RegExp("^([a-zA-Z0-9_-])+([.]?[a-zA-Z0-9_-]{1,})*@([a-zA-Z0-9-_]{2,}[.])+[a-zA-Z]{2,3}\\s*$","i"); break; // adresse mail valide customer@fai.ext
 	}
 	return reg;
 };
