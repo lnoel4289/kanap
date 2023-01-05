@@ -151,31 +151,83 @@ function totalPrice() {
 
 // FORMULAIRE --------------------------
 
-
-// Fonction de test
-function validateField(fld, msg, ptrn) {
-  let firstName = document.getElementById('firstName');
-  let firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
-  let pattern = /^[a-zA-ZÀ-ÿ]([ -]?[a-zA-ZÀ-ÿ]){0,49}$/;
-  function testField() {
-    let result = pattern.test(firstName.value);
-    if(result == true || firstName.value == '') {
-      firstNameErrorMsg.textContent = ''
-    } else {
-      firstNameErrorMsg.textContent = 'Unvalid'
-    }
-  };
-  firstName.addEventListener('change', testField);
+//  Objet contact pour requête POST
+let contact = {
+  firstName: document.getElementById('firstName').value,
+  lastName: document.getElementById('lastName').value,
+  address: document.getElementById('address').value,
+  city: document.getElementById('city').value,
+  email: document.getElementById('email').value
 }
-validateField()
+console.log(contact)
+
+// Classe permettant d'instancier chaque élément du formulaire
+class FormField {
+  constructor(field, msgField ,msgTxt ,pattern) {
+    this.field = field;
+    this.msgField = msgField;
+    this.msgTxt = msgTxt;
+    this.pattern = pattern;
+  }
+}
+// Instance firstName
+let firstName = new FormField(
+  document.getElementById('firstName'),
+  document.getElementById('firstNameErrorMsg'),
+  'Le prénom actuel n\'est pas un prénom valide. Veuillez poursuivre ou corriger votre saisie',
+  /^[a-zA-ZÀ-ÿ]([ -]?[a-zA-ZÀ-ÿ]){0,49}$/
+);
+
+
+
+function validateField(formField) {
+  function testField() {
+    let result = formField.pattern.test(formField.field.value);
+    if(result == true || formField.field.value == '') {
+      formField.msgField.textContent = '';
+      contact.firstName = formField.field.value;
+      console.log(contact);
+      } else {
+      formField.msgField.textContent = formField.msgTxt;
+    }
+  }
+  formField.field.addEventListener('input', testField);
+}
+validateField(firstName)
+
+
+
+
+
+// // Fonction de test
+// function validateField() {
+//   let firstName = document.getElementById('firstName');
+//   let firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
+//   let pattern = /^[a-zA-ZÀ-ÿ]([ -]?[a-zA-ZÀ-ÿ]){0,49}$/;
+//   function testField() {
+//     let result = pattern.test(firstName.value);
+//     if(result == true || firstName.value == '') {
+//       firstNameErrorMsg.textContent = '';
+//       contact.firstName = firstName.value;
+//       console.log(contact);
+//     } else {
+//       firstNameErrorMsg.textContent = 'Le prénom actuel n\'est pas un prénom valide. Veuillez poursuivre ou corriger votre saise';
+//     }
+//   }
+//   firstName.addEventListener('input', testField);
+// }
+// validateField()
+
+
+
 
 
 // Points de surveillance
 
-// let lastName = document.getElementById('lastName');
-// let address = document.getElementById('address');
-// let city = document.getElementById('city');
-// let email = document.getElementById('email');
+// lastName = document.getElementById('lastName');
+// address = document.getElementById('address');
+// city = document.getElementById('city');
+// email = document.getElementById('email');
 
 
 // Submit button
@@ -206,3 +258,4 @@ function regex(Variable) {
 
 
 // + sort items
+
