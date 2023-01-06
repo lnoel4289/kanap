@@ -178,6 +178,7 @@ async function order(btn) {
     'contact': contact,
     'products': products
   };
+  // !!! C'est ici qu'on devrait vérifier if/else !!!
   await fetch(`http://localhost:3000/api/products/order`, {
     method: 'POST',
     headers: {
@@ -187,8 +188,10 @@ async function order(btn) {
   })
   .then((res) => res.json())
   .then((jsObj) => jsObj.orderId)
-  .then(bnl => window.open('../html/confirmation.html' + '?id=' + bnl))
+  .then(bnl => window.location.href='../html/confirmation.html' + '?id=' + bnl)
 };
+// !!! Le clic sur submit doit donner lieu à une vérification du contenu de 'data' (récupéré dans le LS) avant le POST !!!
+
 
 // Fonction récupérant l'orderId et envoi vers la page confirmation
 function catchOrderId(response) {
@@ -290,7 +293,7 @@ validateField(address);
 validateField(city);
 validateField(email);
 
-// !!! Le clic sur submit doit donner lieu à une vérification du contenu de data (récupéré dans le LS) avant le POST !!!
+
 
 //  VERS CONFIRMATION
 
