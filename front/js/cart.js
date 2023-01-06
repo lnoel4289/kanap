@@ -149,8 +149,10 @@ function totalPrice() {
 
 
 
-// FORMULAIRE --------------------------
 
+
+
+// FORMULAIRE --------------------------
 
 //  Objet contact pour requête POST
 let contact = {
@@ -161,7 +163,52 @@ let contact = {
   email: document.getElementById('email').value
 }
 
-// Classe permettant d'instancier chaque élément du formulaire
+// Tableau products pour requête POST
+let products = [];
+
+// Submit
+const submitBtn = document.getElementById('order')
+
+submitBtn.addEventListener('click', order)
+
+// Fonction requête POST
+async function order(btn) {
+  btn.preventDefault();
+  let data = {
+    'contact': contact,
+    'products': products
+  };
+  await fetch(`http://localhost:3000/api/products/order`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then((res) => res.json())
+  .then((jsObj) => jsObj.orderId)
+  .then(bnl => window.open('../html/confirmation.html' + '?id=' + bnl))
+};
+
+// Fonction récupérant l'orderId et envoi vers la page confirmation
+function catchOrderId(response) {
+  let orderId = response.orderId;
+
+}
+
+// Fonction permettent d'actualiser le tableau products
+function setProducts() {
+  let cart = getCart();
+  for (let item of cart) {
+    products.push(item.id);
+  }
+  localStorage.setItem('products', JSON.stringify(products))
+};setProducts()
+
+
+
+
+// Classe champ du formulaire
 class FormField {
   constructor(field, msgField ,msgTxt ,pattern) {
     this.field = field;
@@ -212,7 +259,6 @@ function validateField(formField) {
     if(result == true || formField.field.value == '') {
       formField.msgField.textContent = '';
       updateContact();
-      console.log(contact);
       } else {
       formField.msgField.textContent = formField.msgTxt;
     }
@@ -229,29 +275,24 @@ function updateContact() {
     lsStoreContact();
 }
 
+// Fonctions de stockage dans le LS
 function lsStoreContact() {
   localStorage.setItem('contact', JSON.stringify(contact));
 }
+function lsStoreProducts() {
+  localStorage.setItem('products', JSON.stringify(products));
+}
 
-// Exécution des fonctions de validation des champs du formulaire
+// Exécution des fonctions de surveillance des champs du formulaire
 validateField(firstName);
 validateField(lastName);
 validateField(address);
 validateField(city);
 validateField(email);
 
-
-// Submit button
-
-// let order = document.getElementById('order');
-
-
-// Si le test est bon on push l'entrée dans l'objet contact:{}
-// De même si changement autorisé on push l'article du panier dans l'array products[] grâce à l'id
-
+// !!! Le clic sur submit doit donner lieu à une vérification du contenu de data (récupéré dans le LS) avant le POST !!!
 
 //  VERS CONFIRMATION
 
 
 // + sort items
-
