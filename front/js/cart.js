@@ -189,14 +189,14 @@ let lastName = new FormField(
 let address = new FormField(
   document.getElementById('address'),
   document.getElementById('addressErrorMsg'),
-  'Le Nom actuel n\'est pas un Nom valide. Veuillez poursuivre ou corriger votre saisie',
+  'L\'adresse actuelle n\'est pas une adresse valide. Veuillez poursuivre ou corriger votre saisie',
   /^[\w\d\s.,#-]*[a-zA-Z]$/
 );
 // Instance city
 let city = new FormField(
   document.getElementById('city'),
   document.getElementById('cityErrorMsg'),
-  'Le Nom actuel n\'est pas un Nom valide. Veuillez poursuivre ou corriger votre saisie',
+  'La ville actuellement saisie n\'existe pas. Veuillez poursuivre ou corriger votre saisie',
   /^[a-zA-Z]([' -]?[a-zA-Z]){0,59}$/
 );
 // Instance email
@@ -204,7 +204,7 @@ let email = new FormField(
   document.getElementById('email'),
   document.getElementById('emailErrorMsg'),
   'Adresse mail invalide. Veuillez corriger ou terminer la saisie.',
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+  /^\w+@[a-zA-Z]+?\.[a-zA-Z]{2,3}$/
 );
 
 function validateField(formField) {
