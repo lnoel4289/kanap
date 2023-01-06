@@ -2,3 +2,5 @@
 const orderId = new URL(document.location.href).searchParams.get('id');
 
 document.getElementById('orderId').textContent = orderId;
+
+// !!! clear LS !!!
