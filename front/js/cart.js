@@ -160,7 +160,6 @@ let contact = {
   city: document.getElementById('city').value,
   email: document.getElementById('email').value
 }
-console.log(contact)
 
 // Classe permettant d'instancier chaque élément du formulaire
 class FormField {
