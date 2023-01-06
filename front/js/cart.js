@@ -83,9 +83,6 @@ function deleteItemFromCart(trucASup) {
   totalQuantity();
   totalPrice();
 };
-// Indiquer lorsque le panier est vide
-// Gérer l'erreur lorsque cart est null
-// Afficher panier vide lors de la suppression du dernier article
 
 // Sauvegarder le panier dans le LS
 function saveCart(cart) {
@@ -112,6 +109,7 @@ function modifyQuantityToCart(qte) {
   totalPrice();
 };
 
+// La modification ne peut dépasser 100
 function checkLegalQtyValue(num) {
   if(num.value < 1) {
     num.value = 1
@@ -119,8 +117,6 @@ function checkLegalQtyValue(num) {
     num.value = 100
   }
 }
-// Gérer aussi le fait que les nombres doivent être entiers (voir également sur product.js)
-// Gérer aussi le fait qu on peut dépasser 100 en ajoutant depuis la page product
 
 // Afficher la quantité totale
 function totalQuantity() {
@@ -145,3 +141,13 @@ function totalPrice() {
   }
   document.getElementById('totalPrice').textContent = totalPrice
 };
+
+// !!! sort items in cart !!!
+
+// !!! Gérer aussi le fait que les nombres doivent être entiers (voir également sur product.js) !!!
+
+// !!! Gérer aussi le fait qu on peut dépasser 100 en ajoutant depuis la page product !!!
+
+// !!! Afficher panier vide lors de la suppression du dernier article !!!
+
+// !!! Affiner les patterns

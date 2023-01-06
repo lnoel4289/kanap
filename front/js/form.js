@@ -142,7 +142,3 @@ let contact = {
   validateField(city);
   validateField(email);
   // !!! boucle for of ou foreach ici !!!
-  
-  
-  
-  // !!! sort items in cart !!!

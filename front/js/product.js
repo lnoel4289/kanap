@@ -100,5 +100,6 @@ function saveCart(cart) {
     localStorage.setItem("cart", JSON.stringify(cart))
 }
 
-// A factoriser + message de confirmation ajout du produit
-// Gérer la quantité pouvant dépasser 100 dans le cart (?)
+// !!! message de confirmation ajout du produit(s) !!!
+
+// !!! Gérer la quantité pouvant dépasser 100 dans le cart !!!
