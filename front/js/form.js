@@ -1,22 +1,102 @@
+// Classe champ du formulaire
+class FormField {
+  constructor(field, msgField ,msgTxt ,pattern) {
+    this.field = field;
+    this.msgField = msgField;
+    this.msgTxt = msgTxt;
+    this.pattern = pattern;
+  }
+}
+// Instance firstName
+let firstName = new FormField(
+  document.getElementById('firstName'),
+  document.getElementById('firstNameErrorMsg'),
+  'Le prénom actuel n\'est pas un prénom valide. Veuillez poursuivre ou corriger votre saisie',
+  /^[a-zA-ZÀ-ÿ]([ -]?[a-zA-ZÀ-ÿ]){0,49}$/
+);
+// Instance lastName
+let lastName = new FormField(
+  document.getElementById('lastName'),
+  document.getElementById('lastNameErrorMsg'),
+  'Le Nom actuel n\'est pas un Nom valide. Veuillez poursuivre ou corriger votre saisie',
+  /^[a-zA-ZÀ-ÿ]([' -]?[a-zA-ZÀ-ÿ]){0,49}$/
+);
+// Instance address
+let address = new FormField(
+  document.getElementById('address'),
+  document.getElementById('addressErrorMsg'),
+  'L\'adresse actuelle n\'est pas une adresse valide. Veuillez poursuivre ou corriger votre saisie',
+  /^[\w\d\s.,#-]*[a-zA-Z]$/
+);
+// Instance city
+let city = new FormField(
+  document.getElementById('city'),
+  document.getElementById('cityErrorMsg'),
+  'La ville actuellement saisie n\'existe pas. Veuillez poursuivre ou corriger votre saisie',
+  /^[a-zA-Z]([' -]?[a-zA-Z]){0,59}$/
+);
+// Instance email
+let email = new FormField(
+  document.getElementById('email'),
+  document.getElementById('emailErrorMsg'),
+  'Adresse mail invalide. Veuillez corriger ou terminer la saisie.',
+  /^\w+@[a-zA-Z]+?\.[a-zA-Z]{2,3}$/
+);
+
+
 //  Objet contact pour requête POST
 let contact = {
-    firstName: document.getElementById('firstName').value,
-    lastName: document.getElementById('lastName').value,
-    address: document.getElementById('address').value,
-    city: document.getElementById('city').value,
-    email: document.getElementById('email').value
-  };
-  
-// Tableau products pour requête POST
-let products = [];
+  firstName: document.getElementById('firstName').value,
+  lastName: document.getElementById('lastName').value,
+  address: document.getElementById('address').value,
+  city: document.getElementById('city').value,
+  email: document.getElementById('email').value
+};
 
+// Fonction actualisant l'objet 'contact'
+function updateContact() {
+  contact.firstName = document.getElementById('firstName').value;
+    contact.lastName = document.getElementById('lastName').value;
+    contact.address = document.getElementById('address').value;
+    contact.city = document.getElementById('city').value;
+    contact.email = document.getElementById('email').value;
+    lsStoreContact();
+}
+
+// Fonction de surveillance renvoyant un message d'erreur tant que le champ comporte une erreur
+function checkField(formField) {
+  function testField() {
+    let result = formField.pattern.test(formField.field.value);
+    if(result == true || formField.field.value == '') {
+      formField.msgField.textContent = '';
+      updateContact();
+      } else {
+      formField.msgField.textContent = formField.msgTxt;
+    }
+  }
+  formField.field.addEventListener('input', testField);
+};
+// Exécution de la fonction de surveillance pour chacun des champs du formulaire
+checkField(firstName);
+checkField(lastName);
+checkField(address);
+checkField(city);
+checkField(email);
+
+// Array products pour requête POST
+let products = [];
+// jusqu'ici on est bon
+
+
+// !!! Il faut que le comportement par défault du HTML soit conservé !!! A déboguer sans doute du au click event non filtré pour l'instant
 // Submit
 const submitBtn = document.getElementById('order');
+// !!! Ou alors ici if qq chose alors addeventmachin
 submitBtn.addEventListener('click', order);
 
 // Fonction requête POST
 async function order(btn) {
-  btn.preventDefault();
+  // btn.preventDefault();
   let data = {
     'contact': contact,
     'products': products
@@ -64,75 +144,6 @@ function setProducts() {
   localStorage.setItem('products', JSON.stringify(products))
 };setProducts()
 
-// Classe champ du formulaire
-class FormField {
-  constructor(field, msgField ,msgTxt ,pattern) {
-    this.field = field;
-    this.msgField = msgField;
-    this.msgTxt = msgTxt;
-    this.pattern = pattern;
-  }
-}
-// Instance firstName
-let firstName = new FormField(
-  document.getElementById('firstName'),
-  document.getElementById('firstNameErrorMsg'),
-  'Le prénom actuel n\'est pas un prénom valide. Veuillez poursuivre ou corriger votre saisie',
-  /^[a-zA-ZÀ-ÿ]([ -]?[a-zA-ZÀ-ÿ]){0,49}$/
-);
-// Instance lastName
-let lastName = new FormField(
-  document.getElementById('lastName'),
-  document.getElementById('lastNameErrorMsg'),
-  'Le Nom actuel n\'est pas un Nom valide. Veuillez poursuivre ou corriger votre saisie',
-  /^[a-zA-ZÀ-ÿ]([' -]?[a-zA-ZÀ-ÿ]){0,49}$/
-);
-// Instance address
-let address = new FormField(
-  document.getElementById('address'),
-  document.getElementById('addressErrorMsg'),
-  'L\'adresse actuelle n\'est pas une adresse valide. Veuillez poursuivre ou corriger votre saisie',
-  /^[\w\d\s.,#-]*[a-zA-Z]$/
-);
-// Instance city
-let city = new FormField(
-  document.getElementById('city'),
-  document.getElementById('cityErrorMsg'),
-  'La ville actuellement saisie n\'existe pas. Veuillez poursuivre ou corriger votre saisie',
-  /^[a-zA-Z]([' -]?[a-zA-Z]){0,59}$/
-);
-// Instance email
-let email = new FormField(
-  document.getElementById('email'),
-  document.getElementById('emailErrorMsg'),
-  'Adresse mail invalide. Veuillez corriger ou terminer la saisie.',
-  /^\w+@[a-zA-Z]+?\.[a-zA-Z]{2,3}$/
-);
-
-// Fonction renvoyant un message d'erreur en cas de non-conformité de champs du formulaire
-function validateField(formField) {
-  function testField() {
-    let result = formField.pattern.test(formField.field.value);
-    if(result == true || formField.field.value == '') {
-      formField.msgField.textContent = '';
-      updateContact();
-      } else {
-      formField.msgField.textContent = formField.msgTxt;
-    }
-  }
-  formField.field.addEventListener('input', testField);
-};
-
-// Fonction actualisant l'objet 'contact'
-function updateContact() {
-  contact.firstName = document.getElementById('firstName').value;
-    contact.lastName = document.getElementById('lastName').value;
-    contact.address = document.getElementById('address').value;
-    contact.city = document.getElementById('city').value;
-    contact.email = document.getElementById('email').value;
-    lsStoreContact();
-}
-
 // Fonctions de stockage de l'objet 'contact' dans le LS
 function lsStoreContact() {
   localStorage.setItem('contact', JSON.stringify(contact));
@@ -142,10 +153,5 @@ function lsStoreProducts() {
   localStorage.setItem('products', JSON.stringify(products));
 }
 
-// Exécution des fonctions de surveillance des champs du formulaire
-validateField(firstName);
-validateField(lastName);
-validateField(address);
-validateField(city);
-validateField(email);
+
 // !!! boucle for of ou foreach ici !!!
