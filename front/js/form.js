@@ -63,13 +63,20 @@ function updateContact() {
     lsStoreContact();
 }
 
+// Fonctions de stockage de l'objet 'contact' dans le LS
+function lsStoreContact() {
+  localStorage.setItem('contact', JSON.stringify(contact));
+}
+
 // Fonction de surveillance renvoyant un message d'erreur tant que le champ comporte une erreur
 function checkField(formField) {
   function testField() {
     let result = formField.pattern.test(formField.field.value);
-    if(result == true || formField.field.value == '') {
+    if(result == true) {
       formField.msgField.textContent = '';
       updateContact();
+      } else if(formField.field.value == '') {
+        formField.msgField.textContent = 'Veuillez renseigner ce champ';
       } else {
       formField.msgField.textContent = formField.msgTxt;
     }
@@ -85,23 +92,41 @@ checkField(email);
 
 // Array products pour requête POST
 let products = [];
-// jusqu'ici on est bon
+
+// Fonction permettent d'actualiser le tableau products
+function updateProducts() {
+  products = [];
+  let cart = getCart();
+  for (let item of cart) {
+    products.push(item.id);
+  }
+  localStorage.setItem('products', JSON.stringify(products))
+};
+updateProducts();
 
 
-// !!! Il faut que le comportement par défault du HTML soit conservé !!! A déboguer sans doute du au click event non filtré pour l'instant
-// Submit
+// Bouton submit 'Commander !'
 const submitBtn = document.getElementById('order');
-// !!! Ou alors ici if qq chose alors addeventmachin
-submitBtn.addEventListener('click', order);
+
+// Empêcher le comportement par défaut du bouton submit
+submitBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  order();
+});
+
+// Fonction affichant un message de contrainte en cas de clic sur le bouton submit alors que certains champs sont vides
+function toFillFields() {
+  let fields = document.querySelectorAll('.cart__order__form__question');
+  for(let field of fields) {
+    if(field.input == undefined) {
+      field.querySelector('p').textContent = "Veuillez renseigner ce champ"
+    }
+  }
+};toFillFields();
+
 
 // Fonction requête POST
-async function order(btn) {
-  // btn.preventDefault();
-  let data = {
-    'contact': contact,
-    'products': products
-  };
-  // !!! C'est ici qu'on devrait vérifier if/else !!!
+async function sendData(data) {
   await fetch(`http://localhost:3000/api/products/order`, {
     method: 'POST',
     headers: {
@@ -111,47 +136,44 @@ async function order(btn) {
   })
   .then(res => res.json())
   .then(jsObj => window.location.href='../html/confirmation.html' + '?id=' + jsObj.orderId)
+  .catch(error => alert(error))
 };
-// !!! Le clic sur submit doit donner lieu à une vérification du contenu de 'data' (récupéré dans le LS) avant le POST !!!
-// function verif() {
-//   // CONTACT
-//   let ContactToCheck = data.contact;
-//   for(let field of data.contact) {
-//     if(field == '' ||)
-//   }
-  // Vérifie que les champs comprennent qq chose
-  // vérifie à nouveau les regex
-  // Inutile de vérif la présence des champs qui sont vérifiés dans le back
 
+async function order() {
+  updateContact();
+  updateProducts();
+  let data = {
+    'contact': contact,
+    'products': products
+  };
+  console.log(data);
+  // !!! C'est ici qu'on devrait vérifier if/else !!!
+  if(
+    products &&
+    products.length >= 1 &&
 
-  // ARRAY PRODUCTID STRINGS
+    contact &&
+    contact.firstName &&
+    contact.lastName &&
+    contact.address &&
+    contact.city &&
+    contact.email &&
 
-// }
+    data.contact.firstName != "" &&
+    firstName.pattern.test(data.contact.firstName) == true &&
 
+    data.contact.lastName != "" &&
+    lastName.pattern.test(data.contact.lastName) == true &&
 
-// Fonction récupérant l'orderId et envoi vers la page confirmation
-function catchOrderId(response) {
-  let orderId = response.orderId;
+    data.contact.address != "" &&
+    address.pattern.test(data.contact.address) == true &&
 
-}
+    data.contact.city != "" &&
+    city.pattern.test(data.contact.city) == true &&
 
-// Fonction permettent d'actualiser le tableau products
-function setProducts() {
-  let cart = getCart();
-  for (let item of cart) {
-    products.push(item.id);
+    data.contact.email != "" &&
+    email.pattern.test(data.contact.email) == true
+    ) {
+    sendData(data);
   }
-  localStorage.setItem('products', JSON.stringify(products))
-};setProducts()
-
-// Fonctions de stockage de l'objet 'contact' dans le LS
-function lsStoreContact() {
-  localStorage.setItem('contact', JSON.stringify(contact));
 }
-// Fonctions de stockage de l'array 'products' dans le LS
-function lsStoreProducts() {
-  localStorage.setItem('products', JSON.stringify(products));
-}
-
-
-// !!! boucle for of ou foreach ici !!!
