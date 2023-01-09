@@ -12,14 +12,14 @@ let firstName = new FormField(
   document.getElementById('firstName'),
   document.getElementById('firstNameErrorMsg'),
   'Le prénom actuel n\'est pas un prénom valide. Veuillez poursuivre ou corriger votre saisie',
-  /^[a-zA-ZÀ-ÿ]([ -]?[a-zA-ZÀ-ÿ]){0,49}$/
+  /^[a-zA-ZÀ-ÿ]([ -]?[a-zA-ZÀ-ÿ]){1,49}$/
 );
 // Instance lastName
 let lastName = new FormField(
   document.getElementById('lastName'),
   document.getElementById('lastNameErrorMsg'),
   'Le Nom actuel n\'est pas un Nom valide. Veuillez poursuivre ou corriger votre saisie',
-  /^[a-zA-ZÀ-ÿ]([' -]?[a-zA-ZÀ-ÿ]){0,49}$/
+  /^[a-zA-ZÀ-ÿ]([' -]?[a-zA-ZÀ-ÿ]){1,49}$/
 );
 // Instance address
 let address = new FormField(
@@ -33,7 +33,7 @@ let city = new FormField(
   document.getElementById('city'),
   document.getElementById('cityErrorMsg'),
   'La ville actuellement saisie n\'existe pas. Veuillez poursuivre ou corriger votre saisie',
-  /^[a-zA-Z]([' -]?[a-zA-Z]){2,59}$/
+  /^[a-zA-Z]([' -]?[a-zA-Z]){1,59}$/
 );
 // Instance email
 let email = new FormField(
@@ -114,14 +114,14 @@ function updateProducts() {
 updateProducts();
 
 
+// // Empêcher le comportement par défaut du bouton submit
+// submitBtn.addEventListener('click', function(e) {
+//   e.preventDefault();
+//   order();
+// });
 
-// Empêcher le comportement par défaut du bouton submit
-submitBtn.addEventListener('click', function(e) {
-  e.preventDefault();
-  order();
-});
-
-// Fonction affichant un message de contrainte en cas de clic sur le bouton submit alors que certains champs sont vides
+// Fonction affichant un message de contrainte tant le champ est vides
+toFillFields();
 function toFillFields() {
   let fields = document.querySelectorAll('.cart__order__form__question');
   for(let field of fields) {
@@ -129,8 +129,7 @@ function toFillFields() {
       field.querySelector('p').textContent = "Veuillez renseigner ce champ"
     }
   }
-};toFillFields();
-
+};
 
 // Fonction requête POST
 async function sendData(data) {
@@ -154,7 +153,6 @@ async function order() {
     'contact': contact,
     'products': products
   };
-  console.log(data);
 
   // Vérification des conditions avant requête
   if(
