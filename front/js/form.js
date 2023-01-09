@@ -33,7 +33,7 @@ let city = new FormField(
   document.getElementById('city'),
   document.getElementById('cityErrorMsg'),
   'La ville actuellement saisie n\'existe pas. Veuillez poursuivre ou corriger votre saisie',
-  /^[a-zA-Z]([' -]?[a-zA-Z]){0,59}$/
+  /^[a-zA-Z]([' -]?[a-zA-Z]){2,59}$/
 );
 // Instance email
 let email = new FormField(
@@ -52,6 +52,16 @@ let contact = {
   city: document.getElementById('city').value,
   email: document.getElementById('email').value
 };
+
+// Array products pour requête POST
+let products = [];
+
+// Bouton submit 'Commander !'
+const submitBtn = document.getElementById('order');
+submitBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  order();
+});
 
 // Fonction actualisant l'objet 'contact'
 function updateContact() {
@@ -90,8 +100,7 @@ checkField(address);
 checkField(city);
 checkField(email);
 
-// Array products pour requête POST
-let products = [];
+
 
 // Fonction permettent d'actualiser le tableau products
 function updateProducts() {
@@ -105,8 +114,6 @@ function updateProducts() {
 updateProducts();
 
 
-// Bouton submit 'Commander !'
-const submitBtn = document.getElementById('order');
 
 // Empêcher le comportement par défaut du bouton submit
 submitBtn.addEventListener('click', function(e) {

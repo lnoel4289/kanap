@@ -1,4 +1,13 @@
+emptiedCart();
 displayCart();
+
+function emptiedCart() {
+  let cart = getCart();
+  if(cart == "" || cart == undefined || cart == null || cart == []) {
+    document.querySelector('h1').textContent = 'Votre panier est vide';
+    document.querySelector('.cart__order').style.display = 'none';
+  }
+};
 
 // Afficher la page panier
 async function displayCart() {
@@ -20,11 +29,14 @@ async function displayItems() {
 // Appeler le panier du LS
 function getCart() {
   let cart = localStorage.getItem("cart");
-  if(cart == null || cart == [] || cart == undefined) {
-      document.querySelector('h1').textContent = 'Votre panier est vide'
+  if(cart == null || cart == undefined || cart =='') {
+    document.querySelector('h1').textContent = 'Votre panier est vide';
+  } else if(cart == []) {
+    document.querySelector('h1').textContent = 'Votre panier est vide';
+    return JSON.parse(cart);
   } else {
-      return JSON.parse(cart)
-  }
+    return JSON.parse(cart);
+  };
 };
 
 // Afficher un item du panier
@@ -62,24 +74,25 @@ function displayProduct(prod, itm) {
 
 // Surveiller les produits supprimables
 function itemToDelete() {
-  let tousLesSupprimer = document.querySelectorAll('.deleteItem');
-  for (let supprimer of tousLesSupprimer) {
+  let AllSupprimer = document.querySelectorAll('.deleteItem');
+  for (let supprimer of AllSupprimer) {
     supprimer.addEventListener('click', () => removeItem(supprimer))
   }
 };
 
 // Supprimer le produit du dom
-function removeItem(bidule) {
-  let cartItem = bidule.closest('.cart__item');
-  cartItem.remove();
-  deleteItemFromCart(cartItem)
+function removeItem(remoteDelete) {
+  let itemNode = remoteDelete.closest('.cart__item');
+  itemNode.remove();
+  deleteItemFromCart(itemNode);
 };
 
 // Supprimer le produit du localstorage
-function deleteItemFromCart(trucASup) {
+function deleteItemFromCart(deletedNode) {
   let cart = getCart();
-  cart = cart.filter(p => p.id != trucASup.dataset.id || p.color != trucASup.dataset.color);
+  cart = cart.filter(p => p.id != deletedNode.dataset.id || p.color != deletedNode.dataset.color);
   saveCart(cart);
+  emptiedCart();
   totalQuantity();
   totalPrice();
 };
@@ -147,7 +160,3 @@ function totalPrice() {
 // !!! Gérer aussi le fait que les nombres doivent être entiers (voir également sur product.js) !!!
 
 // !!! Gérer aussi le fait qu on peut dépasser 100 en ajoutant depuis la page product !!!
-
-// !!! Afficher panier vide lors de la suppression du dernier article !!!
-
-// !!! Affiner les patterns

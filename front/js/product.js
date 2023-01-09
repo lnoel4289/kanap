@@ -92,7 +92,7 @@ function getCart() {
     if(cart == null) {
         return []
     } else {
-        return JSON.parse(cart)
+        return JSON.parse(cart);
     }
 }
 // Sauvegarder le panier dans le LS
