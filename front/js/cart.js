@@ -104,18 +104,18 @@ function saveCart(cart) {
 
 // Surveiller les quantités modifiables
 function quantityToChange() {
-  let toutesLesQte = document.querySelectorAll('.itemQuantity');
-  for (let qte of toutesLesQte) {
-    qte.addEventListener('change', () => modifyQuantityToCart(qte));
+  let allQty = document.querySelectorAll('.itemQuantity');
+  for (let qty of allQty) {
+    qty.addEventListener('change', () => modifyQuantityToCart(qty));
   }
 };
 
 // Modifier la quantité d'un produit
-function modifyQuantityToCart(qte) {
-  let cartItem = qte.closest('.cart__item');
+function modifyQuantityToCart(qty) {
+  let cartItem = qty.closest('.cart__item');
   let cart = getCart();
   let foundItem = cart.find(p => p.id == cartItem.dataset.id && p.color == cartItem.dataset.color);
-  checkLegalQtyValue(qte);
+  checkLegalQtyValue(qty);
   foundItem.quantity = Number(qte.value);
   saveCart(cart);
   totalQuantity();
@@ -125,9 +125,11 @@ function modifyQuantityToCart(qte) {
 // La modification ne peut dépasser 100
 function checkLegalQtyValue(num) {
   if(num.value < 1) {
-    num.value = 1
+    num.value = 1;
   } else if(num.value > 100) {
-    num.value = 100
+    num.value = 100;
+  } else if(Number.isInteger(num.value) != true) {
+    num.value = Math.floor(num.value);
   }
 }
 
@@ -156,7 +158,3 @@ function totalPrice() {
 };
 
 // !!! sort items in cart !!!
-
-// !!! Gérer aussi le fait que les nombres doivent être entiers (voir également sur product.js) !!!
-
-// !!! Gérer aussi le fait qu on peut dépasser 100 en ajoutant depuis la page product !!!

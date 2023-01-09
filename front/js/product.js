@@ -41,8 +41,9 @@ function displayColorOptions(product) {
     }
 }
 
-
+///////////////////////////
 // Partie 2: Vers le panier
+///////////////////////////
 
 // Définir les noeuds à surveiller
 let colorSelector = document.getElementById('colors')
@@ -65,13 +66,15 @@ addToCartButton.addEventListener('click', (product) => {
         quantity: Number(productQuantity)
     }
     if(currentProduct.color == '') {
-        alert('Veuillez choisir choisir une couleur')
+        alert('Veuillez choisir une couleur')
     } else if(currentProduct.quantity < 1 || currentProduct.quantity == NaN) {
         alert('Veuillez indiquer le nombre d\'articles souhaités')
     } else if(currentProduct.quantity > 100) {
         alert('Vous ne pouvez pas dépasser un total de 100 articles !')
+    } else if(Number.isInteger(currentProduct.quantity) == false) {
+        alert('Le nombre d\'articles doit être un nombre entier')
     } else {
-        addToCart(currentProduct)
+        addToCart(currentProduct);
     }   
 })
 
@@ -81,11 +84,19 @@ function addToCart(currentProduct) {
     let foundItem = cart.find(item => item.id == currentProduct.id && item.color == currentProduct.color)
     if(foundItem != undefined) {
         foundItem.quantity = foundItem.quantity + currentProduct.quantity;
+        if(foundItem.quantity > 100) {
+            foundItem.quantity = 100;
+            alert('La quantité totale a été réduite à 100 pour le produit choisi');
+        } else {
+            alert ('Le produit a bien été ajouté à votre panier !')
+        }
     } else {
-        cart.push(currentProduct)        
+        cart.push(currentProduct);
+        alert ('Le produit a bien été ajouté à votre panier !')  
     }
-    saveCart(cart)
+    saveCart(cart);
 }
+
 // Récupérer le panier du LS
 function getCart() {
     let cart = localStorage.getItem("cart")
@@ -99,7 +110,3 @@ function getCart() {
 function saveCart(cart) {
     localStorage.setItem("cart", JSON.stringify(cart))
 }
-
-// !!! message de confirmation ajout du produit(s) !!!
-
-// !!! Gérer la quantité pouvant dépasser 100 dans le cart !!!
