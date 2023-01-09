@@ -184,4 +184,3 @@ async function order() {
     sendData(data);
   }
 }
-// !!! Affiner encore les regex !!!
