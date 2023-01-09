@@ -3,6 +3,6 @@ const orderId = new URL(document.location.href).searchParams.get('id');
 
 document.getElementById('orderId').textContent = orderId;
 
-if(orderId && orderId != undefined) {
+if(orderId != undefined) {
     localStorage.clear();
 };
