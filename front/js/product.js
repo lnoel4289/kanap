@@ -1,4 +1,6 @@
+//////////////////////////////////////////////////////////////////////////
 // Partie 1: Remplir la page produit en fonction de l'id du produit visité
+//////////////////////////////////////////////////////////////////////////
 
 // Récupérer l'id du produit dans l'url
 const productId = new URL(document.location.href).searchParams.get('id')
@@ -41,9 +43,9 @@ function displayColorOptions(product) {
     }
 }
 
-///////////////////////////
-// Partie 2: Vers le panier
-///////////////////////////
+//////////////////////////////
+// Partie 2: Vers le panier //
+//////////////////////////////
 
 // Définir les noeuds à surveiller
 let colorSelector = document.getElementById('colors')
@@ -108,5 +110,6 @@ function getCart() {
 }
 // Sauvegarder le panier dans le LS
 function saveCart(cart) {
-    localStorage.setItem("cart", JSON.stringify(cart))
+    cart.sort();
+    localStorage.setItem("cart", JSON.stringify(cart));
 }

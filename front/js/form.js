@@ -56,7 +56,7 @@ let contact = {
 // Array products pour requête POST
 let products = [];
 
-// Bouton submit 'Commander !'
+// Evènements du bouton submit 'Commander !'
 const submitBtn = document.getElementById('order');
 submitBtn.addEventListener('click', function(e) {
   e.preventDefault();
@@ -78,8 +78,9 @@ function lsStoreContact() {
   localStorage.setItem('contact', JSON.stringify(contact));
 }
 
-// Fonction de surveillance renvoyant un message d'erreur tant que le champ comporte une erreur
+// Fonction de surveillance de la validité des champs du formulaire 
 function checkField(formField) {
+  formField.field.addEventListener('input', testField);
   function testField() {
     let result = formField.pattern.test(formField.field.value);
     if(result == true) {
@@ -91,15 +92,14 @@ function checkField(formField) {
       formField.msgField.textContent = formField.msgTxt;
     }
   }
-  formField.field.addEventListener('input', testField);
 };
+
 // Exécution de la fonction de surveillance pour chacun des champs du formulaire
 checkField(firstName);
 checkField(lastName);
 checkField(address);
 checkField(city);
 checkField(email);
-
 
 
 // Fonction permettent d'actualiser le tableau products
@@ -146,6 +146,7 @@ async function sendData(data) {
   .catch(error => alert(error))
 };
 
+// Fonction conditionnant l'envoi de la requête POST
 async function order() {
   updateContact();
   updateProducts();
@@ -154,7 +155,8 @@ async function order() {
     'products': products
   };
   console.log(data);
-  // !!! C'est ici qu'on devrait vérifier if/else !!!
+
+  // Vérification des conditions avant requête
   if(
     products &&
     products.length >= 1 &&
@@ -184,3 +186,4 @@ async function order() {
     sendData(data);
   }
 }
+// !!! Affiner encore les regex !!!

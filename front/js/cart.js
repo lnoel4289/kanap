@@ -1,6 +1,7 @@
-emptiedCart();
-displayCart();
+// INITIALISATION DE LA PAGE
 
+emptiedCart();
+//  Votre panier est vide
 function emptiedCart() {
   let cart = getCart();
   if(cart == "" || cart == undefined || cart == null || cart == []) {
@@ -9,6 +10,7 @@ function emptiedCart() {
   }
 };
 
+displayCart();
 // Afficher la page panier
 async function displayCart() {
   await displayItems();
@@ -18,12 +20,12 @@ async function displayCart() {
   totalPrice();
 };
 
-// Afficher les items du panier
+// Afficher tous les items du panier
 async function displayItems() {
   let cart = getCart();
   for(let kanap of cart) {
     await displayItem(kanap)
-  }
+  };
 };
 
 // Appeler le panier du LS
@@ -72,6 +74,11 @@ function displayProduct(prod, itm) {
     </article>`;
 };
 
+//  FIN INITIALISATION DE LA PAGE
+
+
+// DYNAMISME DE LA PAGE
+
 // Surveiller les produits supprimables
 function itemToDelete() {
   let AllSupprimer = document.querySelectorAll('.deleteItem');
@@ -116,7 +123,7 @@ function modifyQuantityToCart(qty) {
   let cart = getCart();
   let foundItem = cart.find(p => p.id == cartItem.dataset.id && p.color == cartItem.dataset.color);
   checkLegalQtyValue(qty);
-  foundItem.quantity = Number(qte.value);
+  foundItem.quantity = Number(qty.value);
   saveCart(cart);
   totalQuantity();
   totalPrice();
