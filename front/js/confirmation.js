@@ -5,4 +5,5 @@ document.getElementById('orderId').textContent = orderId;
 
 if(orderId != undefined) {
     localStorage.clear();
+    
 };

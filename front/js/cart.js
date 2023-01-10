@@ -1,6 +1,8 @@
 // INITIALISATION DE LA PAGE
 
 emptiedCart();
+displayCart();
+
 //  Votre panier est vide
 function emptiedCart() {
   let cart = getCart();
@@ -10,7 +12,6 @@ function emptiedCart() {
   }
 };
 
-displayCart();
 // Afficher la page panier
 async function displayCart() {
   await displayItems();
@@ -163,5 +164,3 @@ function totalPrice() {
   }
   document.getElementById('totalPrice').textContent = totalPrice
 };
-
-// !!! sort items in cart !!!
