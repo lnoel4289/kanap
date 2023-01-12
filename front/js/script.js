@@ -1,9 +1,11 @@
-//  Requêter l'API
-fetch('http://localhost:3000/api/products/')
+//  Requêter l'API (fonction incluant l'affichage des produits)
+function getProducts() {
+    fetch('http://localhost:3000/api/products/')
     .then(res => res.json())
     .then(products => displayProducts(products))
     .catch(() => document.querySelector('h1').textContent = 'Serveur indisponible'
     );
+};
 
 // Afficher les produits
 function displayProducts(products) {
@@ -15,4 +17,8 @@ function displayProducts(products) {
           <p class="productDescription">${product.description}</p>
         </article>`;
     }
-}
+};
+
+// Appel de la fonction getProducts
+getProducts();
+

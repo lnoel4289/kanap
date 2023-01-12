@@ -3,15 +3,18 @@
 //////////////////////////////////////////////////////////////////////////
 
 // Récupérer l'id du produit dans l'url
-const productId = new URL(document.location.href).searchParams.get('id')
+const productId = new URL(document.location.href).searchParams.get('id');
+getProduct();
 
 // Requête (GET) product via l'id
-fetch(`http://localhost:3000/api/products/${productId}`)
+function getProduct() {
+    fetch(`http://localhost:3000/api/products/${productId}`)
     .then((res) => res.json())
     .then((product) => fillProductPage(product))
     .catch(() => {
         document.getElementById('title').textContent = 'Impossible d\'afficher le produit'
     })
+};
 
 //  Fonction remplir la page
 function fillProductPage(product) {
@@ -20,7 +23,7 @@ function fillProductPage(product) {
     displayColorOptions(product)
 }
 
-//  Display page title
+//  Affiche le title de l'entête HTML dans l'onglet en cours
 function displayPageTitle(product) {
     document.querySelector('head > title').textContent = product.name
 }
@@ -43,20 +46,27 @@ function displayColorOptions(product) {
     }
 }
 
+
 //////////////////////////////
 // Partie 2: Vers le panier //
 //////////////////////////////
 
 // Définir les noeuds à surveiller
-let colorSelector = document.getElementById('colors')
-let quantitySelector = document.getElementById('itemQuantity')
-let addToCartButton = document.getElementById('addToCart')
+const colorSelector = document.getElementById('colors');
+const quantitySelector = document.getElementById('itemQuantity');
+const addToCartButton = document.getElementById('addToCart');
 
 // Définir les membres du tableau currentProduct
-let productQuantity = quantitySelector.value
+let productQuantity = Number(quantitySelector.value)
 let productColor = colorSelector.value
 
+let currentProduct = {
+    id: productId,
+    color: productColor, 
+    quantity: productQuantity
+};
 // Modifier l'array 'currentProduct' lorsqu'un évênement se produit
+
 colorSelector.addEventListener('input', e => productColor = e.target.value)
 quantitySelector.addEventListener('change', e => productQuantity = e.target.value)
 
