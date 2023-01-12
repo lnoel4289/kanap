@@ -1,16 +1,23 @@
 // INITIALISATION DE LA PAGE
 
-emptiedCart();
-displayCart();
-
-//  Votre panier est vide
-function emptiedCart() {
+//  Fonction "votre panier est vide".
+function displayPage() {
   let cart = getCart();
   if(cart == "" || cart == undefined || cart == null || cart == []) {
     document.querySelector('h1').textContent = 'Votre panier est vide';
     document.querySelector('.cart__order').style.display = 'none';
+  } else {
+    displayCart();
   }
 };
+displayPage();
+
+function g(panier) {
+  if(cart == "" || cart == undefined || cart == null || cart == []) {
+    document.querySelector('h1').textContent = 'Votre panier est vide';
+    document.querySelector('.cart__order').style.display = 'none';
+  }
+}
 
 // Afficher la page panier
 async function displayCart() {
@@ -34,8 +41,10 @@ function getCart() {
   let cart = localStorage.getItem("cart");
   if(cart == null || cart == undefined || cart =='') {
     document.querySelector('h1').textContent = 'Votre panier est vide';
+    document.querySelector('.cart__order').style.display = 'none';
   } else if(cart == []) {
     document.querySelector('h1').textContent = 'Votre panier est vide';
+    document.querySelector('.cart__order').style.display = 'none';
     return JSON.parse(cart);
   } else {
     return JSON.parse(cart);
