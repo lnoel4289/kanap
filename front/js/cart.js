@@ -34,6 +34,7 @@ function getCart() {
   let cart = localStorage.getItem("cart");
   if(cart == null || cart == undefined || cart =='') {
     document.querySelector('h1').textContent = 'Votre panier est vide';
+    return [];
   } else if(cart == []) {
     document.querySelector('h1').textContent = 'Votre panier est vide';
     return JSON.parse(cart);
