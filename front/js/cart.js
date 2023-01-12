@@ -32,12 +32,9 @@ async function displayItems() {
 // Appeler le panier du LS
 function getCart() {
   let cart = localStorage.getItem("cart");
-  if(cart == null || cart == undefined || cart =='') {
+  if(cart == null || cart == undefined || cart =='' || cart == []) {
     document.querySelector('h1').textContent = 'Votre panier est vide';
     return [];
-  } else if(cart == []) {
-    document.querySelector('h1').textContent = 'Votre panier est vide';
-    return JSON.parse(cart);
   } else {
     return JSON.parse(cart);
   };
@@ -146,8 +143,8 @@ function checkLegalQtyValue(num) {
 function totalQuantity() {
   let cart = getCart();
   let totalQuantity = 0;
-  cart.forEach(calculateTotalQuantity);
-  function calculateTotalQuantity(item) {
+  cart.forEach(addQtyToTotal);
+  function addQtyToTotal(item) {
     totalQuantity += item.quantity;
   };
   document.getElementById('totalQuantity').textContent = totalQuantity;
@@ -157,8 +154,8 @@ function totalQuantity() {
 function totalPrice() {
   let totalPrice = 0;
   let cartItems = document.querySelectorAll('.cart__item');
-  cartItems.forEach(calculateTotalPrice);
-  function calculateTotalPrice(cartItem) {
+  cartItems.forEach(addPriceToTotal);
+  function addPriceToTotal(cartItem) {
     let quantity = cartItem.querySelector('.itemQuantity').value;
     let price = cartItem.querySelector('h2 + p + p > span').textContent;
     totalPrice += quantity*price

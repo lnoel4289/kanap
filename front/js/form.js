@@ -70,11 +70,11 @@ function updateContact() {
     contact.address = document.getElementById('address').value;
     contact.city = document.getElementById('city').value;
     contact.email = document.getElementById('email').value;
-    lsStoreContact();
+    saveContact();
 }
 
 // Fonctions de stockage de l'objet 'contact' dans le LS
-function lsStoreContact() {
+function saveContact() {
   localStorage.setItem('contact', JSON.stringify(contact));
 }
 
@@ -113,13 +113,6 @@ function updateProducts() {
 };
 updateProducts();
 
-
-// // Empêcher le comportement par défaut du bouton submit
-// submitBtn.addEventListener('click', function(e) {
-//   e.preventDefault();
-//   order();
-// });
-
 // Fonction affichant un message de contrainte tant le champ est vides
 toFillFields();
 function toFillFields() {
@@ -133,7 +126,7 @@ function toFillFields() {
 
 // Fonction requête POST
 async function sendData(data) {
-  await fetch(`http://localhost:3000/api/products/order`, {
+  await fetch(`http://localhost:300/api/products/order`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
