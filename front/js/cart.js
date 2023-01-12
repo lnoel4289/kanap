@@ -109,7 +109,7 @@ function deleteItemFromCart(deletedNode) {
   let cart = getCart();
   cart = cart.filter(p => p.id != deletedNode.dataset.id || p.color != deletedNode.dataset.color);
   saveCart(cart);
-  emptiedCart();
+  displayPage();
   totalQuantity();
   totalPrice();
 };
