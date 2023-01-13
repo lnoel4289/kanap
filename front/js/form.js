@@ -126,7 +126,7 @@ function toFillFields() {
 
 // Fonction requête POST
 async function sendData(data) {
-  await fetch(`http://localhost:300/api/products/order`, {
+  await fetch(`http://localhost:3000/api/products/order`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
