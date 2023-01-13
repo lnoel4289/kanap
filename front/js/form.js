@@ -135,7 +135,7 @@ async function sendData(data) {
   })
   .then(res => res.json())
   .then(jsObj => window.location.href='../html/confirmation.html' + '?id=' + jsObj.orderId)
-  .catch(error => alert('Serveur indisponible'))
+  .catch((err) => alert(err + '\n\nServeur non-atteint ! Merci de réessayer plus tard.\nVotre panier sera conservé en attendant.'))
 };
 
 // Fonction conditionnant l'envoi de la requête POST
