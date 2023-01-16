@@ -1,5 +1,4 @@
 // INITIALISATION DE LA PAGE
-
 emptiedCart();
 displayCart();
 
@@ -14,11 +13,11 @@ function emptiedCart() {
 
 // Afficher la page panier
 async function displayCart() {
-  await displayItems();
-  itemToDelete();
-  quantityToChange();
-  totalQuantity();
-  totalPrice();
+  await displayItems(); // Fonction affichant tous le produits
+  itemToDelete(); // Supprimer un produit
+  quantityToChange(); // Modifier la quantité d'un produit
+  totalQuantity(); // Afficher la quantité totale de produits
+  totalPrice(); // Afficher le prix total
 };
 
 // Afficher tous les items du panier
@@ -128,7 +127,7 @@ function modifyQuantityToCart(qty) {
   totalPrice();
 };
 
-// La modification ne peut dépasser 100
+// La quantité doit être un entier compris entre 1 et 100
 function checkLegalQtyValue(num) {
   if(num.value < 1) {
     num.value = 1;

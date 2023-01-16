@@ -5,7 +5,3 @@ function confirm() {
     localStorage.clear();
 };
 confirm();
-
-
-
-

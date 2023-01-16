@@ -6,7 +6,7 @@ class FormField {
     this.msgTxt = msgTxt;
     this.pattern = pattern;
   }
-}
+};
 // Instance firstName
 let firstName = new FormField(
   document.getElementById('firstName'),
@@ -59,8 +59,8 @@ let products = [];
 // Evènements du bouton submit 'Commander !'
 const submitBtn = document.getElementById('order');
 submitBtn.addEventListener('click', function(e) {
-  e.preventDefault();
-  order();
+  e.preventDefault(); // Empêcher le comportement par défaut
+  order(); // Fonction commander
 });
 
 // Fonction actualisant l'objet 'contact'
@@ -71,12 +71,12 @@ function updateContact() {
     contact.city = document.getElementById('city').value;
     contact.email = document.getElementById('email').value;
     saveContact();
-}
+};
 
 // Fonctions de stockage de l'objet 'contact' dans le LS
 function saveContact() {
   localStorage.setItem('contact', JSON.stringify(contact));
-}
+};
 
 // Fonction de surveillance de la validité des champs du formulaire 
 function checkField(formField) {
@@ -113,13 +113,13 @@ function updateProducts() {
 };
 updateProducts();
 
-// Fonction affichant un message de contrainte tant le champ est vides
+// Fonction affichant un message de contrainte tant le champ est vide
 toFillFields();
 function toFillFields() {
   let fields = document.querySelectorAll('.cart__order__form__question');
   for(let field of fields) {
     if(field.input == undefined) {
-      field.querySelector('p').textContent = "Veuillez renseigner ce champ"
+      field.querySelector('p').textContent = "Veuillez renseigner ce champ";
     }
   }
 };
@@ -176,4 +176,4 @@ async function order() {
     ) {
     sendData(data);
   }
-}
+};
